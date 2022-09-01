@@ -13,13 +13,21 @@ import { NavigatorName, ScreenName } from "../../const";
 import { knownDevicesSelector } from "../../reducers/ble";
 import Touchable from "../Touchable";
 import Item from "./Item";
-import type { BaseNavigatorProps } from "../RootNavigator/BaseNavigator";
 import { saveBleDeviceName } from "../../actions/ble";
 import { setHasConnectedDevice } from "../../actions/appstate";
 import {
   setLastConnectedDevice,
   setReadOnlyMode,
 } from "../../actions/settings";
+import {
+  BaseComposite,
+  StackNavigatorProps,
+} from "../RootNavigator/types/helpers";
+import { ManagerNavigatorStackParamList } from "../RootNavigator/types/ManagerNavigator";
+
+type Navigation = BaseComposite<
+  StackNavigatorProps<ManagerNavigatorStackParamList>
+>;
 
 type Props = {
   onSelect: (_: Device) => void;
@@ -36,7 +44,7 @@ export default function SelectDevice({ onSelect }: Props) {
   const { t } = useTranslation();
 
   const knownDevices = useSelector(knownDevicesSelector);
-  const navigation = useNavigation<BaseNavigatorProps>();
+  const navigation = useNavigation<Navigation["navigation"]>();
   const { scannedDevices } = useBleDevicesScanning({
     bleTransportListen: TransportBLE.listen,
   });
@@ -135,25 +143,22 @@ export default function SelectDevice({ onSelect }: Props) {
   }, [navigation]);
 
   const onPairDevices = useCallback(() => {
-    navigation.navigate(
-      ScreenName.BleDevicePairingFlow as "BleDevicePairingFlow",
-      {
-        areKnownDevicesDisplayed: true,
-        onSuccessAddToKnownDevices: true,
-        onSuccessNavigateToConfig: {
-          navigateInput: {
-            name: NavigatorName.Manager,
+    navigation.navigate(ScreenName.BleDevicePairingFlow, {
+      areKnownDevicesDisplayed: true,
+      onSuccessAddToKnownDevices: true,
+      onSuccessNavigateToConfig: {
+        navigateInput: {
+          name: NavigatorName.Manager,
+          params: {
+            screen: ScreenName.Manager,
             params: {
-              screen: ScreenName.Manager,
-              params: {
-                device: null,
-              },
+              device: null,
             },
           },
-          pathToDeviceParam: "params.params.device",
         },
+        pathToDeviceParam: "params.params.device",
       },
-    );
+    });
   }, [navigation]);
 
   const onSetUpNewDevice = useCallback(() => {

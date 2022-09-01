@@ -6,31 +6,25 @@ import { Keyboard, StyleSheet, View, SafeAreaView } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import { getAccountBridge } from "@ledgerhq/live-common/bridge/index";
 import { useSelector } from "react-redux";
-import type { Transaction } from "@ledgerhq/live-common/families/bitcoin/types";
 import Button from "../../components/Button";
 import KeyboardView from "../../components/KeyboardView";
 import NavigationScrollView from "../../components/NavigationScrollView";
 import LText from "../../components/LText";
 import { accountScreenSelector } from "../../reducers/accounts";
 import TextInput from "../../components/FocusedTextInput";
+import { StackNavigatorProps } from "../../components/RootNavigator/types/helpers";
+import { SendFundsNavigatorStackParamList } from "../../components/RootNavigator/types/SendFundsNavigator";
+import { ScreenName } from "../../const";
 
 const options = {
   title: <Trans i18nKey="send.summary.fees" />,
-  headerLeft: null,
+  headerLeft: undefined,
 };
-type RouteParams = {
-  accountId: string;
-  transaction: Transaction;
-  currentNavigation: string;
-  satPerByte: BigNumber | null | undefined;
-  setSatPerByte: (..._: Array<any>) => any;
-};
-type Props = {
-  navigation: any;
-  route: {
-    params: RouteParams;
-  };
-};
+
+type Props = StackNavigatorProps<
+  SendFundsNavigatorStackParamList,
+  ScreenName.BitcoinEditCustomFees
+>;
 
 function BitcoinEditCustomFees({ navigation, route }: Props) {
   const { colors } = useTheme();
@@ -45,14 +39,14 @@ function BitcoinEditCustomFees({ navigation, route }: Props) {
     satPerByte ? satPerByte.toString() : "",
   );
 
-  const onChange = text => {
+  const onChange = useCallback((text: string) => {
     setOwnSatPerByte(text.replace(/\D/g, ""));
-  };
+  }, []);
 
   const onValidateText = useCallback(() => {
     if (BigNumber(ownSatPerByte || 0).isZero()) return;
     Keyboard.dismiss();
-    setSatPerByte(BigNumber(ownSatPerByte || 0));
+    setSatPerByte && setSatPerByte(BigNumber(ownSatPerByte || 0));
     const bridge = getAccountBridge(account, parentAccount);
     const { currentNavigation } = route.params;
     navigation.navigate(currentNavigation, {

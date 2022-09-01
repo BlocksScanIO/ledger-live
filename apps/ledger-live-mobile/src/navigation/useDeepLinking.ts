@@ -3,7 +3,12 @@ import { useNavigation } from "@react-navigation/native";
 import { useRemoteLiveAppContext } from "@ledgerhq/live-common/platform/providers/RemoteLiveAppProvider/index";
 import { filterPlatformApps } from "@ledgerhq/live-common/platform/filters";
 import { getPlatformVersion } from "@ledgerhq/live-common/platform/version";
+import { findCryptoCurrencyById } from "@ledgerhq/live-common/currencies/index";
+import { LiveAppManifest } from "@ledgerhq/live-common/platform/providers/types";
+import { AppManifest } from "@ledgerhq/live-common/platform/types";
 import { NavigatorName, ScreenName } from "../const";
+import { StackNavigatorNavigation } from "../components/RootNavigator/types/helpers";
+import { BaseNavigatorStackParamList } from "../components/RootNavigator/types/BaseNavigator";
 
 function getSettingsScreen(pathname: string) {
   const secondPath = pathname.replace(/(^\/+|\/+$)/g, "");
@@ -42,14 +47,15 @@ function getSettingsScreen(pathname: string) {
 }
 
 // To avoid recreating a ref on each render and triggering hooks
-const emptyObject = {};
+const emptyObject: LiveAppManifest[] = [];
 export function useDeepLinkHandler() {
-  const { navigate } = useNavigation();
+  const { navigate } =
+    useNavigation<StackNavigatorNavigation<BaseNavigatorStackParamList>>();
   const { state } = useRemoteLiveAppContext();
   const manifests = state?.value?.liveAppByIndex || emptyObject;
   const filteredManifests = useMemo(() => {
     const branches = ["stable", "soon"];
-    return filterPlatformApps(Array.from(manifests.values()), {
+    return filterPlatformApps([...(manifests as AppManifest[])], {
       version: getPlatformVersion(),
       platform: "mobile",
       branches,
@@ -65,10 +71,13 @@ export function useDeepLinkHandler() {
       switch (hostname) {
         case "accounts":
           if (currency) {
-            navigate(NavigatorName.Accounts, {
-              screen: ScreenName.Asset,
-              params: { currency },
-            });
+            const c = findCryptoCurrencyById(currency);
+            if (c) {
+              navigate(NavigatorName.Accounts, {
+                screen: ScreenName.Asset,
+                params: { currency: c },
+              });
+            }
           } else navigate(NavigatorName.Accounts);
           break;
 
@@ -131,7 +140,6 @@ export function useDeepLinkHandler() {
               ? {
                   platform: dapp.id,
                   name: dapp.name,
-                  // $FlowFixMe Nope I want query to be spread last. Sry Flow.
                   ...query,
                 }
               : query,

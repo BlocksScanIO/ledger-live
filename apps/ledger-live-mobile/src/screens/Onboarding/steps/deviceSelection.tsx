@@ -9,15 +9,22 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { ArrowLeftMedium, HelpMedium } from "@ledgerhq/native-ui/assets/icons";
 import useFeature from "@ledgerhq/live-common/featureFlags/useFeature";
 import { DeviceModelId } from "@ledgerhq/types-devices";
-
 import { TrackScreen } from "../../../analytics";
+import { ScreenName, NavigatorName } from "../../../const";
+import { OnboardingNavigatorParamList } from "../../../components/RootNavigator/types/OnboardingNavigator";
+import {
+  BaseNavigationComposite,
+  RootNavigationComposite,
+  StackNavigatorNavigation,
+} from "../../../components/RootNavigator/types/helpers";
+
 import nanoSSvg from "../assets/nanoS";
 import nanoSPSvg from "../assets/nanoSP";
 import nanoXSvg from "../assets/nanoX";
-import { ScreenName, NavigatorName } from "../../../const";
 import DiscoverCard from "../../Discover/DiscoverCard";
 import Illustration from "../../../images/illustration/Illustration";
 import setupLedgerImg from "../../../images/illustration/Shared/_SetupLedger.png";
+import { RootStackParamList } from "../../../components/RootNavigator/types/RootNavigator";
 
 const nanoX = {
   SvgDevice: nanoXSvg,
@@ -40,11 +47,20 @@ const nanoFTS = {
   setupTime: 300000,
 };
 
+type NavigationProp = RootNavigationComposite<
+  BaseNavigationComposite<
+    StackNavigatorNavigation<
+      OnboardingNavigatorParamList,
+      ScreenName.OnboardingDeviceSelection
+    >
+  >
+>;
+
 function OnboardingStepDeviceSelection() {
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp>();
   const { t } = useTranslation();
   const { colors } = useTheme();
-  const syncOnboarding = useFeature("syncOnboarding");
+  const syncOnboarding = useFeature("syncOnboarding" as const);
 
   const devices = useMemo(() => {
     if (syncOnboarding?.enabled) {
@@ -68,10 +84,13 @@ function OnboardingStepDeviceSelection() {
     // Add NanoX.id, NanoSP.id etc, to the array when supported
     if ([nanoFTS.id].includes(deviceModelId)) {
       // On pairing success, navigate to the Sync Onboarding Companion
-      // navigation.pushe on stack navigation because with navigation.navigate
+      // navigation.push on stack navigation because with navigation.navigate
       // it could not go back to this screen in certain cases.
-      navigation.push(NavigatorName.Base as "Base", {
-        screen: ScreenName.BleDevicePairingFlow as "BleDevicePairingFlow",
+      // FIXME: bindings seem to be wrong here
+      (
+        navigation as unknown as StackNavigatorNavigation<RootStackParamList>
+      ).push(NavigatorName.Base, {
+        screen: ScreenName.BleDevicePairingFlow,
         params: {
           // TODO: for now we remove this
           // filterByDeviceModelId: DeviceModelId.nanoFTS,

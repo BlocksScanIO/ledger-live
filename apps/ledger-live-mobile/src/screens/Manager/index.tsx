@@ -14,36 +14,26 @@ import { useFeature } from "@ledgerhq/live-common/featureFlags/index";
 import { Flex, Text } from "@ledgerhq/native-ui";
 
 import { ScreenName } from "../../const";
-import { ManagerTab } from "../../const/manager";
 import SelectDevice2 from "../../components/SelectDevice2";
 import SelectDevice from "../../components/SelectDevice";
 import RemoveDeviceMenu from "../../components/SelectDevice2/RemoveDeviceMenu";
 import TrackScreen from "../../analytics/TrackScreen";
 import { track } from "../../analytics";
-import type { DeviceLike } from "../../reducers/ble";
 import NavigationScrollView from "../../components/NavigationScrollView";
 import DeviceActionModal from "../../components/DeviceActionModal";
-import type { BaseNavigatorProps } from "../../components/RootNavigator/BaseNavigator";
+import {
+  BaseComposite,
+  StackNavigatorProps,
+} from "../../components/RootNavigator/types/helpers";
+import { ManagerNavigatorStackParamList } from "../../components/RootNavigator/types/ManagerNavigator";
 
 const action = createAction(connectManager);
 
-type RouteParams = {
-  searchQuery?: string;
-  tab?: ManagerTab;
-  installApp?: string;
-  firmwareUpdate?: boolean;
-  device?: Device;
-  appsToRestore?: string[];
-};
+type NavigationProps = BaseComposite<
+  StackNavigatorProps<ManagerNavigatorStackParamList, ScreenName.Manager>
+>;
 
-type Props = {
-  navigation: any;
-  knownDevices: DeviceLike[];
-  route: {
-    params: RouteParams;
-    name: string;
-  };
-};
+type Props = NavigationProps;
 
 type ChooseDeviceProps = Props & {
   isFocused: boolean;
@@ -55,12 +45,8 @@ const ChooseDevice: React.FC<ChooseDeviceProps> = ({ isFocused }) => {
   const [chosenDevice, setChosenDevice] = useState<Device | undefined>();
   const [showMenu, setShowMenu] = useState<boolean>(false);
 
-  const navigation = useNavigation<BaseNavigatorProps>();
-  const { params } = useRoute<{
-    params: RouteParams;
-    name: string;
-    key: string;
-  }>();
+  const navigation = useNavigation<NavigationProps["navigation"]>();
+  const { params } = useRoute<NavigationProps["route"]>();
 
   const newDeviceSelectionFeatureFlag = useFeature("llmNewDeviceSelection");
 
