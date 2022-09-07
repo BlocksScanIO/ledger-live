@@ -1518,6 +1518,7 @@ importers:
       '@types/node': '*'
       axios: ^0.26.1
       bignumber.js: ^9.0.2
+      crypto-js: ^4.1.1
       documentation: 13.2.4
       jest: ^28.1.1
       rimraf: '*'
@@ -1535,6 +1536,7 @@ importers:
       '@ledgerhq/logs': link:../logs
       axios: 0.26.1
       bignumber.js: 9.0.2
+      crypto-js: 4.1.1
     devDependencies:
       '@types/jest': 27.5.0
       '@types/node': 17.0.32
