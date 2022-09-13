@@ -4,6 +4,7 @@ const path = require("path");
 
 const importers = [
   require("./importers/ethereum-plugins"),
+  require("./importers/eip712"),
   require("./importers/erc20-signatures"),
   require("./importers/erc20full"),
   require("./importers/erc20exchange"),
@@ -35,16 +36,16 @@ axios
           const folder = path.join(inputFolder, "assets", p);
           const signatureFolder = path.join(inputFolder, "signatures/prod/", p);
           const items = fs.readdirSync(folder);
-          const shouldLoad = ((id) => imp.shouldLoad ? imp.shouldLoad({ folder, id }) : !id.endsWith(".json"));
-          return promiseAllBatched(
-            50,
-            items.sort().filter(shouldLoad),
-            (id) =>
-              Promise.resolve()
-                .then(() => imp.loader({ signatureFolder, folder, id }))
-                .catch((e) => {
-                  console.log("FAILED " + id + " " + e);
-                })
+          const shouldLoad = (id) =>
+            imp.shouldLoad
+              ? imp.shouldLoad({ folder, id })
+              : !id.endsWith(".json");
+          return promiseAllBatched(50, items.sort().filter(shouldLoad), (id) =>
+            Promise.resolve()
+              .then(() => imp.loader({ signatureFolder, folder, id }))
+              .catch((e) => {
+                console.log("FAILED " + id + " " + e);
+              })
           );
         })
       )
