@@ -33,6 +33,7 @@ import {
   usePlatformUrl,
 } from "@ledgerhq/live-common/platform/react";
 import trackingWrapper from "@ledgerhq/live-common/platform/tracking";
+import { Device } from "@ledgerhq/live-common/hw/actions/types";
 
 import { openModal } from "../../actions/modals";
 import TrackPage from "../../analytics/TrackPage";
@@ -49,6 +50,8 @@ import {
   broadcastTransactionLogic,
   RequestAccountParams,
 } from "./LiveAppSDKLogic";
+import { getCurrentDevice } from "~/renderer/reducers/devices";
+import { command } from "~/renderer/commands";
 
 const tracking = trackingWrapper(track);
 
@@ -67,9 +70,7 @@ const CustomWebview = styled("webview")`
   transition: opacity 200ms ease-out;
 `;
 
-const Wrapper = styled(Box).attrs(() => ({
-  flex: 1,
-}))`
+const Wrapper = styled(Box)`
   position: relative;
 `;
 
@@ -326,6 +327,63 @@ export default function WebPlatformPlayer({ manifest, onClose, inputs = {}, conf
     [accounts, dispatch, manifest],
   );
 
+  const device = useSelector(getCurrentDevice);
+  // const websocketBridge = useRef<Subscription>();
+
+  // useEffect(() => {
+  //   return () => {
+  //     websocketBridge.current?.unsubscribe();
+  //   };
+  // }, []);
+
+  const deviceGetTransport = useCallback(
+    ({ appName }: { appName?: string }) => {
+      return new Promise((resolve, reject) =>
+        dispatch(
+          openModal("MODAL_CONNECT_DEVICE", {
+            appName,
+            onResult: (device: Device) => {
+              if (!device) {
+                return reject(new Error("No device"));
+              }
+              console.log("onResult: ", device);
+              // const { deviceId } = device;
+              // // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              // // @ts-ignore: command is using flow typings
+              // websocketBridge.current = command("websocketBridge")({ deviceId, origin }).subscribe({
+              //   complete: () => {
+              //     console.log("websocketBridge closed");
+              //   },
+              //   error: (error: unknown) => {
+              //     console.error("websocketBridge error: ", error);
+              //   },
+              // }) as Subscription;
+              // console.log(websocketBridge.current);
+              resolve(true);
+            },
+            onCancel: (error: Error) => {
+              reject(error);
+            },
+          }),
+        ),
+      );
+    },
+    [dispatch],
+  );
+
+  const deviceExchange = useCallback(
+    ({ apduHex }: { apduHex: string }) => {
+      if (!device) {
+        return Promise.reject(new Error("No device"));
+      }
+      const { deviceId } = device;
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore: command is using flow typings
+      return command("testApdu")({ apduHex, deviceId }).toPromise();
+    },
+    [device],
+  );
+
   const handlers = useMemo(
     () => ({
       "account.list": listAccounts,
@@ -337,6 +395,8 @@ export default function WebPlatformPlayer({ manifest, onClose, inputs = {}, conf
       "exchange.start": startExchange,
       "exchange.complete": completeExchange,
       "message.sign": signMessage,
+      "device.getTransport": deviceGetTransport,
+      "device.exchange": deviceExchange,
     }),
     [
       listAccounts,
@@ -348,6 +408,8 @@ export default function WebPlatformPlayer({ manifest, onClose, inputs = {}, conf
       startExchange,
       completeExchange,
       signMessage,
+      deviceGetTransport,
+      deviceExchange,
     ],
   );
 
@@ -437,7 +499,7 @@ export default function WebPlatformPlayer({ manifest, onClose, inputs = {}, conf
         config={config?.topBarConfig}
       />
 
-      <Wrapper>
+      <Wrapper flex={1}>
         <CustomWebview
           src={url.toString()}
           ref={targetRef}

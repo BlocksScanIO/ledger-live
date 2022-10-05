@@ -502,22 +502,28 @@ importers:
 
   apps/ledger-live-desktop/tests/utils/dummy-live-app:
     specifiers:
+      '@ledgerhq/hw-app-eth': ^6.29.9
+      '@ledgerhq/hw-transport': ^6.27.6
       '@ledgerhq/live-app-sdk': ^0.5.0
       '@types/jest': ^27.0.1
       '@types/node': ^16.7.13
       '@types/react': ^17.0.20
       '@types/react-dom': ^17.0.9
+      buffer: ^6.0.3
       cross-env: ^7.0.3
       react: ^17.0.2
       react-dom: ^17.0.2
       react-scripts: 5.0.0
       typescript: ^4.4.2
     dependencies:
+      '@ledgerhq/hw-app-eth': 6.29.9
+      '@ledgerhq/hw-transport': 6.27.6
       '@ledgerhq/live-app-sdk': 0.5.1
       '@types/jest': 27.5.1
       '@types/node': 16.11.12
       '@types/react': 17.0.45
       '@types/react-dom': 17.0.16_@types+react@17.0.45
+      buffer: 6.0.3
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
       react-scripts: 5.0.0_3k6agborcge6z57osi42vahqli
@@ -11549,6 +11555,12 @@ packages:
       react: 17.0.2
     dev: false
 
+  /@ledgerhq/cryptoassets/6.35.1:
+    resolution: {integrity: sha512-iPO8DLbOms4ZtB+8PHHPHV7k6dkITyc6RoVFfSRlnrh/9tA4mXWz1OVO1EZIw48uOse9Fm4lGY8bkWpyYEfYYA==}
+    dependencies:
+      invariant: 2.2.4
+    dev: false
+
   /@ledgerhq/devices/5.51.1:
     resolution: {integrity: sha512-4w+P0VkbjzEXC7kv8T1GJ/9AVaP9I6uasMZ/JcdwZBS3qwvKo5A5z9uGhP5c7TvItzcmPb44b5Mw2kT+WjUuAA==}
     dependencies:
@@ -11563,6 +11575,15 @@ packages:
     dependencies:
       '@ledgerhq/errors': 6.10.1
       '@ledgerhq/logs': 6.10.0
+      rxjs: 6.6.7
+      semver: 7.3.7
+    dev: false
+
+  /@ledgerhq/devices/7.0.3:
+    resolution: {integrity: sha512-URlcgq6yKklWxj35nIu/eTF0UpGLGUOp69xp8uHeyoMK2wqVC0GNGeD2MvKyJ+ul83edqMEI98GycA98Y7trsg==}
+    dependencies:
+      '@ledgerhq/errors': 6.11.1
+      '@ledgerhq/logs': 6.10.1
       rxjs: 6.6.7
       semver: 7.3.7
     dev: false
@@ -11590,11 +11611,36 @@ packages:
     resolution: {integrity: sha512-92d1zRQleR1AQ4CAXgWgDtKUms+8EwShLVUcajI+BLWvgJ1Vclmq6PsBIDEQbsm+riVu/Ji3LcHdmgFgmi0VGw==}
     dev: false
 
+  /@ledgerhq/errors/6.11.1:
+    resolution: {integrity: sha512-HT1PFvNrejcN5z3ba6xikacIdHWMkjBeE9U5FFoGHhaKBKGjC74mnCeEo0/oJunyuVId+9mhGnv6lrBl6Mkqdg==}
+    dev: false
+
   /@ledgerhq/hw-app-eth/5.11.0:
     resolution: {integrity: sha512-qgpPwZzM8UMHYMC5+9xYV2O+8kgkDAl9+38w9JiBksaGmUFqcS4najsB1nj6AWf2rGEuXdKMb2WEYRskVypJrA==}
     dependencies:
       '@ledgerhq/errors': 5.50.0
       '@ledgerhq/hw-transport': 5.51.1
+    dev: false
+
+  /@ledgerhq/hw-app-eth/6.29.9:
+    resolution: {integrity: sha512-jHWPzHv0fru6+gcJgxF/uICgxPTp0mO17eQnBG7bN4DGX6B6gwWXKcl48zc9MnwQ/OtMFfx8YGhc2Osg1WzI+w==}
+    dependencies:
+      '@ethersproject/abi': 5.7.0
+      '@ethersproject/rlp': 5.7.0
+      '@ledgerhq/cryptoassets': 6.35.1
+      '@ledgerhq/errors': 6.11.1
+      '@ledgerhq/hw-transport': 6.27.6
+      '@ledgerhq/hw-transport-mocker': 6.27.6
+      '@ledgerhq/logs': 6.10.1
+      axios: 0.26.1
+      bignumber.js: 9.0.2
+    dev: false
+
+  /@ledgerhq/hw-transport-mocker/6.27.6:
+    resolution: {integrity: sha512-qSG+be63tXqGvheUSoRYPL2STESqgXujxhiFNTaww/A3GcFPspCPx5tkXLcWPp99dzoNZ6s9SsXlAXleNUZx1g==}
+    dependencies:
+      '@ledgerhq/hw-transport': 6.27.6
+      '@ledgerhq/logs': 6.10.1
     dev: false
 
   /@ledgerhq/hw-transport-u2f/5.36.0-deprecated:
@@ -11631,6 +11677,14 @@ packages:
       events: 3.3.0
     dev: false
 
+  /@ledgerhq/hw-transport/6.27.6:
+    resolution: {integrity: sha512-DRGUsB8WfbeEPuU42nAtwYpA5D6Bq3q1CvC2VjDinkukLcf6XMc22YUJl9mxt+h+/cLTU1Ff/pz+fqYqeELLEA==}
+    dependencies:
+      '@ledgerhq/devices': 7.0.3
+      '@ledgerhq/errors': 6.11.1
+      events: 3.3.0
+    dev: false
+
   /@ledgerhq/json-bignumber/1.1.0:
     resolution: {integrity: sha512-FxWFC3UrYF077OV8eXLZ+2ymnr0IEVICdBk5SgplcIM1T4aZWMAJ+KvCVIxUB+DirygBaCYeUwWBrs5twxHUXA==}
     dependencies:
@@ -11657,6 +11711,10 @@ packages:
 
   /@ledgerhq/logs/6.10.0:
     resolution: {integrity: sha512-lLseUPEhSFUXYTKj6q7s2O3s2vW2ebgA11vMAlKodXGf5AFw4zUoEbTz9CoFOC9jS6xY4Qr8BmRnxP/odT4Uuw==}
+    dev: false
+
+  /@ledgerhq/logs/6.10.1:
+    resolution: {integrity: sha512-z+ILK8Q3y+nfUl43ctCPuR4Y2bIxk/ooCQFwZxhtci1EhAtMDzMAx2W25qx8G1PPL9UUOdnUax19+F0OjXoj4w==}
     dev: false
 
   /@ledgerhq/react-native-passcode-auth/2.1.0:
@@ -22124,7 +22182,7 @@ packages:
       loader-utils: 2.0.2
       make-dir: 3.1.0
       schema-utils: 2.7.1
-      webpack: 5.72.1_esbuild@0.13.15
+      webpack: 5.72.1
 
   /babel-messages/6.23.0:
     resolution: {integrity: sha1-8830cDhYA1sqKVHG7F7fbGLyYw4=}
@@ -27628,6 +27686,7 @@ packages:
     cpu: [arm64]
     os: [android]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-android-arm64/0.14.49:
@@ -27662,6 +27721,7 @@ packages:
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-darwin-64/0.14.49:
@@ -27696,6 +27756,7 @@ packages:
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-darwin-arm64/0.14.49:
@@ -27730,6 +27791,7 @@ packages:
     cpu: [x64]
     os: [freebsd]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-freebsd-64/0.14.49:
@@ -27764,6 +27826,7 @@ packages:
     cpu: [arm64]
     os: [freebsd]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-freebsd-arm64/0.14.49:
@@ -27798,6 +27861,7 @@ packages:
     cpu: [ia32]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-linux-32/0.14.49:
@@ -27832,6 +27896,7 @@ packages:
     cpu: [x64]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-linux-64/0.14.49:
@@ -27866,6 +27931,7 @@ packages:
     cpu: [arm]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-linux-arm/0.14.49:
@@ -27900,6 +27966,7 @@ packages:
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-linux-arm64/0.14.49:
@@ -27934,6 +28001,7 @@ packages:
     cpu: [mips64el]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-linux-mips64le/0.14.49:
@@ -27968,6 +28036,7 @@ packages:
     cpu: [ppc64]
     os: [linux]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-linux-ppc64le/0.14.49:
@@ -28069,6 +28138,7 @@ packages:
     cpu: [x64]
     os: [netbsd]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-netbsd-64/0.14.49:
@@ -28103,6 +28173,7 @@ packages:
     cpu: [x64]
     os: [openbsd]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-openbsd-64/0.14.49:
@@ -28143,6 +28214,7 @@ packages:
     cpu: [x64]
     os: [sunos]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-sunos-64/0.14.49:
@@ -28177,6 +28249,7 @@ packages:
     cpu: [ia32]
     os: [win32]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-windows-32/0.14.49:
@@ -28211,6 +28284,7 @@ packages:
     cpu: [x64]
     os: [win32]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-windows-64/0.14.49:
@@ -28245,6 +28319,7 @@ packages:
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
+    dev: true
     optional: true
 
   /esbuild-windows-arm64/0.14.49:
@@ -28296,6 +28371,7 @@ packages:
       esbuild-windows-32: 0.13.15
       esbuild-windows-64: 0.13.15
       esbuild-windows-arm64: 0.13.15
+    dev: true
 
   /esbuild/0.14.49:
     resolution: {integrity: sha512-/TlVHhOaq7Yz8N1OJrjqM3Auzo5wjvHFLk+T8pIue+fhnhIMpfAzsG6PLVMbFveVxqD2WOp3QHei+52IMUNmCw==}
@@ -50882,6 +50958,7 @@ packages:
       webpack: 5.72.1_esbuild@0.13.15
     transitivePeerDependencies:
       - metro
+    dev: true
 
   /terser-webpack-plugin/5.3.1_webpack@5.72.1:
     resolution: {integrity: sha512-GvlZdT6wPQKbDNW/GDQzZFg/j4vKU96yl2q6mcUkzKOgW4gwf1Z8cZToUCrz31XHlPWH8MVb1r2tFtdDtTGJ7g==}
@@ -50907,7 +50984,6 @@ packages:
       webpack: 5.72.1
     transitivePeerDependencies:
       - metro
-    dev: false
 
   /terser/4.8.0:
     resolution: {integrity: sha512-EAPipTNeWsb/3wLPeup1tVPaXfIaU68xMnVdPafIL1TV05OhASArYyIfFvnvJCNrR2NIOvDVNNTFRa+Re2MWyw==}
@@ -54193,7 +54269,6 @@ packages:
       - esbuild
       - metro
       - uglify-js
-    dev: false
 
   /webpack/5.72.1_esbuild@0.13.15:
     resolution: {integrity: sha512-dXG5zXCLspQR4krZVR6QgajnZOjW2K/djHvdcRaDQvsjV9z9vaW6+ja5dZOYbqBBjF6kGXka/2ZyxNdc+8Jung==}
@@ -54234,6 +54309,7 @@ packages:
       - esbuild
       - metro
       - uglify-js
+    dev: true
 
   /websocket-driver/0.6.5:
     resolution: {integrity: sha512-oBx6ZM1Gs5q2jwZuSN/Qxyy/fbgomV8+vqsmipaPKB/74hjHlKuM07jNmRhn4qa2AdUwsgxrltq+gaPsHgcl0Q==}

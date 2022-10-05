@@ -358,7 +358,7 @@ function inferCommandParams(appRequest: AppRequest) {
     appName = currency.managerAppName;
   }
 
-  invariant(appName, "appName or currency or account is missing");
+  // invariant(appName, "appName or currency or account is missing");
 
   if (dependencies) {
     dependencies = dependencies.map((d) => inferCommandParams(d).appName);
