@@ -326,7 +326,7 @@ importers:
       '@ledgerhq/types-cryptoassets': link:../../libs/ledgerjs/packages/types-cryptoassets
       '@ledgerhq/types-devices': link:../../libs/ledgerjs/packages/types-devices
       '@ledgerhq/types-live': link:../../libs/ledgerjs/packages/types-live
-      '@polkadot/react-identicon': 0.89.2_grbnt2wkerwtzf6thy4efz3p5i
+      '@polkadot/react-identicon': 0.89.2_fane7jikarojcev26y27hpbhu4
       '@sentry/electron': 4.0.0
       '@sentry/node': 7.8.1
       '@sentry/tracing': 7.8.1
@@ -505,6 +505,7 @@ importers:
       '@ledgerhq/hw-app-eth': ^6.29.9
       '@ledgerhq/hw-transport': ^6.27.6
       '@ledgerhq/live-app-sdk': ^0.5.0
+      '@ledgerhq/live-common': workspace:^27.3.1
       '@types/jest': ^27.0.1
       '@types/node': ^16.7.13
       '@types/react': ^17.0.20
@@ -516,9 +517,10 @@ importers:
       react-scripts: 5.0.0
       typescript: ^4.4.2
     dependencies:
-      '@ledgerhq/hw-app-eth': 6.29.9
-      '@ledgerhq/hw-transport': 6.27.6
+      '@ledgerhq/hw-app-eth': link:../../../../../libs/ledgerjs/packages/hw-app-eth
+      '@ledgerhq/hw-transport': link:../../../../../libs/ledgerjs/packages/hw-transport
       '@ledgerhq/live-app-sdk': 0.5.1
+      '@ledgerhq/live-common': link:../../../../../libs/ledger-live-common
       '@types/jest': 27.5.1
       '@types/node': 16.11.12
       '@types/react': 17.0.45
@@ -11555,26 +11557,11 @@ packages:
       react: 17.0.2
     dev: false
 
-  /@ledgerhq/cryptoassets/6.35.1:
-    resolution: {integrity: sha512-iPO8DLbOms4ZtB+8PHHPHV7k6dkITyc6RoVFfSRlnrh/9tA4mXWz1OVO1EZIw48uOse9Fm4lGY8bkWpyYEfYYA==}
-    dependencies:
-      invariant: 2.2.4
-    dev: false
-
   /@ledgerhq/devices/5.51.1:
     resolution: {integrity: sha512-4w+P0VkbjzEXC7kv8T1GJ/9AVaP9I6uasMZ/JcdwZBS3qwvKo5A5z9uGhP5c7TvItzcmPb44b5Mw2kT+WjUuAA==}
     dependencies:
       '@ledgerhq/errors': 5.50.0
       '@ledgerhq/logs': 5.50.0
-      rxjs: 6.6.7
-      semver: 7.3.7
-    dev: false
-
-  /@ledgerhq/devices/7.0.0:
-    resolution: {integrity: sha512-vq4B33WdU0dRAJIRFWZMj6w1W1yw1i4mekCmhk7N9wPaFrtGWZ2iI9WDihsNOBooCWKQe8Jsb9eD8RVThbSlFQ==}
-    dependencies:
-      '@ledgerhq/errors': 6.10.1
-      '@ledgerhq/logs': 6.10.0
       rxjs: 6.6.7
       semver: 7.3.7
     dev: false
@@ -11607,10 +11594,6 @@ packages:
     resolution: {integrity: sha512-gu6aJ/BHuRlpU7kgVpy2vcYk6atjB4iauP2ymF7Gk0ez0Y/6VSMVSJvubeEQN+IV60+OBK0JgeIZG7OiHaw8ow==}
     dev: false
 
-  /@ledgerhq/errors/6.10.1:
-    resolution: {integrity: sha512-92d1zRQleR1AQ4CAXgWgDtKUms+8EwShLVUcajI+BLWvgJ1Vclmq6PsBIDEQbsm+riVu/Ji3LcHdmgFgmi0VGw==}
-    dev: false
-
   /@ledgerhq/errors/6.11.1:
     resolution: {integrity: sha512-HT1PFvNrejcN5z3ba6xikacIdHWMkjBeE9U5FFoGHhaKBKGjC74mnCeEo0/oJunyuVId+9mhGnv6lrBl6Mkqdg==}
     dev: false
@@ -11620,27 +11603,6 @@ packages:
     dependencies:
       '@ledgerhq/errors': 5.50.0
       '@ledgerhq/hw-transport': 5.51.1
-    dev: false
-
-  /@ledgerhq/hw-app-eth/6.29.9:
-    resolution: {integrity: sha512-jHWPzHv0fru6+gcJgxF/uICgxPTp0mO17eQnBG7bN4DGX6B6gwWXKcl48zc9MnwQ/OtMFfx8YGhc2Osg1WzI+w==}
-    dependencies:
-      '@ethersproject/abi': 5.7.0
-      '@ethersproject/rlp': 5.7.0
-      '@ledgerhq/cryptoassets': 6.35.1
-      '@ledgerhq/errors': 6.11.1
-      '@ledgerhq/hw-transport': 6.27.6
-      '@ledgerhq/hw-transport-mocker': 6.27.6
-      '@ledgerhq/logs': 6.10.1
-      axios: 0.26.1
-      bignumber.js: 9.0.2
-    dev: false
-
-  /@ledgerhq/hw-transport-mocker/6.27.6:
-    resolution: {integrity: sha512-qSG+be63tXqGvheUSoRYPL2STESqgXujxhiFNTaww/A3GcFPspCPx5tkXLcWPp99dzoNZ6s9SsXlAXleNUZx1g==}
-    dependencies:
-      '@ledgerhq/hw-transport': 6.27.6
-      '@ledgerhq/logs': 6.10.1
     dev: false
 
   /@ledgerhq/hw-transport-u2f/5.36.0-deprecated:
@@ -11666,14 +11628,6 @@ packages:
     dependencies:
       '@ledgerhq/devices': 5.51.1
       '@ledgerhq/errors': 5.50.0
-      events: 3.3.0
-    dev: false
-
-  /@ledgerhq/hw-transport/6.27.2:
-    resolution: {integrity: sha512-GF4pmK78rEKhZfbmunwQ131c+0MGa6L5IoYlwgFcg6CaFpUjjPiTCKUFsm4flsE0Z0Ltn9QuKoe+xEHULo7rGA==}
-    dependencies:
-      '@ledgerhq/devices': 7.0.0
-      '@ledgerhq/errors': 6.10.1
       events: 3.3.0
     dev: false
 
@@ -11707,10 +11661,6 @@ packages:
 
   /@ledgerhq/logs/5.50.0:
     resolution: {integrity: sha512-swKHYCOZUGyVt4ge0u8a7AwNcA//h4nx5wIi0sruGye1IJ5Cva0GyK9L2/WdX+kWVTKp92ZiEo1df31lrWGPgA==}
-    dev: false
-
-  /@ledgerhq/logs/6.10.0:
-    resolution: {integrity: sha512-lLseUPEhSFUXYTKj6q7s2O3s2vW2ebgA11vMAlKodXGf5AFw4zUoEbTz9CoFOC9jS6xY4Qr8BmRnxP/odT4Uuw==}
     dev: false
 
   /@ledgerhq/logs/6.10.1:
@@ -12476,13 +12426,12 @@ packages:
       '@substrate/ss58-registry': 1.18.0
     dev: false
 
-  /@polkadot/react-identicon/0.89.2_grbnt2wkerwtzf6thy4efz3p5i:
+  /@polkadot/react-identicon/0.89.2_fane7jikarojcev26y27hpbhu4:
     resolution: {integrity: sha512-zxfhWfeN1N15NxEoPU0PsVme0SbV4eWmZ9jnlfJGa4D8PMJFzsJ/eA04hXn10DEttvQvrlQ+jhCwBpvmBQ29dw==}
     peerDependencies:
       react: '*'
       react-dom: '*'
       react-is: '*'
-      styled-components: '*'
     dependencies:
       '@babel/runtime': 7.17.9
       '@polkadot/keyring': 8.7.1
@@ -18078,7 +18027,7 @@ packages:
     resolution: {integrity: sha512-gyBO8FarBrItPGAfrnm4J7vrIWMsr9xqgfzgN4PAqY7eEmL8MDuZtdpk6B6DBuJ3hYbqxvOEa0QPhNzBxnGPeA==}
     engines: {node: '>=6.0.0'}
     dependencies:
-      '@ledgerhq/hw-transport': 6.27.2
+      '@ledgerhq/hw-transport': 6.27.6
       '@stablelib/blake2b': 1.0.1
       '@taquito/taquito': 13.0.1
       '@taquito/utils': 13.0.1
@@ -28515,7 +28464,7 @@ packages:
     dependencies:
       confusing-browser-globals: 1.0.11
       eslint: 7.32.0
-      eslint-plugin-import: 2.26.0_ffi3uiz42rv3jyhs6cr7p7qqry
+      eslint-plugin-import: 2.26.0_yuomakvifwhuugsn7tszrjtzoa
       object.assign: 4.1.2
       object.entries: 1.1.5
     dev: true
@@ -28532,7 +28481,7 @@ packages:
     dependencies:
       eslint: 7.32.0
       eslint-config-airbnb-base: 14.2.1_hpmu7kn6tcn2vnxpfzvv33bxmy
-      eslint-plugin-import: 2.26.0_ffi3uiz42rv3jyhs6cr7p7qqry
+      eslint-plugin-import: 2.26.0_yuomakvifwhuugsn7tszrjtzoa
       eslint-plugin-jsx-a11y: 6.5.1_eslint@7.32.0
       eslint-plugin-react: 7.29.4_eslint@7.32.0
       eslint-plugin-react-hooks: 4.5.0_eslint@7.32.0
@@ -31944,7 +31893,7 @@ packages:
       vue-template-compiler:
         optional: true
     dependencies:
-      '@babel/code-frame': 7.18.6
+      '@babel/code-frame': 7.16.7
       '@types/json-schema': 7.0.11
       chalk: 4.1.2
       chokidar: 3.5.3
@@ -37789,7 +37738,7 @@ packages:
       '@babel/preset-env': ^7.1.6
     dependencies:
       '@babel/core': 7.18.10
-      '@babel/parser': 7.18.11
+      '@babel/parser': 7.17.10
       '@babel/plugin-proposal-class-properties': 7.16.7_@babel+core@7.18.10
       '@babel/plugin-proposal-nullish-coalescing-operator': 7.16.7_@babel+core@7.18.10
       '@babel/plugin-proposal-optional-chaining': 7.16.7_@babel+core@7.18.10
@@ -40443,7 +40392,7 @@ packages:
       metro-hermes-compiler: 0.67.0
       metro-inspector-proxy: 0.67.0
       metro-minify-uglify: 0.67.0
-      metro-react-native-babel-preset: 0.67.0_@babel+core@7.17.10
+      metro-react-native-babel-preset: 0.67.0
       metro-resolver: 0.67.0
       metro-runtime: 0.67.0
       metro-source-map: 0.67.0
