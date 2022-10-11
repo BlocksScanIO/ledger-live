@@ -8,7 +8,6 @@ const importers = [
   require("./importers/erc20full"),
   require("./importers/erc20exchange"),
   require("./importers/bep20full"),
-  require("./importers/bep20exchange"),
   require("./importers/polygontokensfull"),
   require("./importers/currenciesExchange"),
 ];

@@ -268,11 +268,7 @@ Returns **(TokenCurrency | null | [undefined](https://developer.mozilla.org/docs
 
 ## Maintainance notes
 
-Import crypto assets data guide:
-
-https://ledgerhq.atlassian.net/wiki/spaces/WALLETCO/pages/3256516784/How+to+import+crypto-assets+data+in+Ledger+Live
-
-Regenerate data:
+To regenerate data:
 
     node script/crypto-assets-importer/index.js ~/dev/crypto-assets
     node script/crypto-assets-importer/tron/sync-trc10-tokens.js
