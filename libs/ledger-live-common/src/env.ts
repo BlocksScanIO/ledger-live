@@ -151,7 +151,7 @@ const envDefinitions = {
     desc: "proxy url for solana API",
   },
   BUY_SELL_TEST_URL: {
-    def: false,
+    def: "",
     parser: stringParser,
     desc: "URL for loading a specific version of the Buy Sell app",
   },
