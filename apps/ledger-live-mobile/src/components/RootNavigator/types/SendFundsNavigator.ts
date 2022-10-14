@@ -43,14 +43,16 @@ import BigNumber from "bignumber.js";
 import { ScreenName } from "../../../const";
 
 export type SendFundsNavigatorStackParamList = {
-  [ScreenName.SendCoin]: {
-    currency?: string;
-    selectedCurrency?: CryptoCurrency | TokenCurrency;
-    next: string;
-    category: string;
-    notEmptyAccounts?: boolean;
-    minBalance?: number;
-  };
+  [ScreenName.SendCoin]:
+    | {
+        currency?: string;
+        selectedCurrency?: CryptoCurrency | TokenCurrency;
+        next?: string;
+        category?: string;
+        notEmptyAccounts?: boolean;
+        minBalance?: number;
+      }
+    | undefined;
   [ScreenName.SendCollection]: { account: Account };
   [ScreenName.SendNft]: { account: Account; collection: ProtoNFT[] };
   [ScreenName.SendSelectRecipient]: {

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import type { Action, Device } from "@ledgerhq/live-common/hw/actions/types";
 import { DeviceNotOnboarded } from "@ledgerhq/live-common/errors";
-import { TransportStatusError, UpdateYourApp } from "@ledgerhq/errors";
+import { TransportStatusError } from "@ledgerhq/errors";
 import { useTranslation } from "react-i18next";
 import {
   ParamListBase,
@@ -37,7 +37,6 @@ import {
   renderRequiresAppInstallation,
   renderAllowManager,
   renderInWrongAppForAccount,
-  renderError,
   renderDeviceNotOnboarded,
   renderBootloaderStep,
   renderExchange,

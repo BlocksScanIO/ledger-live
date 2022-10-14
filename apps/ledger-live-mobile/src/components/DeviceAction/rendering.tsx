@@ -36,7 +36,7 @@ import { ParamListBase } from "@react-navigation/native";
 import { setModalLock } from "../../actions/appstate";
 import { urls } from "../../config/urls";
 import Alert from "../Alert";
-import { lighten } from "../../colors";
+import { lighten, Theme } from "../../colors";
 import Button from "../Button";
 import DeviceActionProgress from "../DeviceActionProgress";
 import { NavigatorName, ScreenName } from "../../const";
@@ -141,7 +141,7 @@ const ConnectDeviceExtraContentWrapper = styled(Flex).attrs({
 
 type RawProps = {
   t: (key: string, options?: { [key: string]: string | number }) => string;
-  colors?: any;
+  colors?: Theme["colors"];
   theme?: "light" | "dark";
 };
 
@@ -169,7 +169,7 @@ export function renderRequiresAppInstallation({
   navigation,
   appNames,
 }: RawProps & {
-  navigation: any;
+  navigation: StackNavigationProp<ParamListBase>;
   appNames: string[];
 }) {
   const appNamesCSV = appNames.join(", ");
@@ -449,7 +449,7 @@ const AllowOpeningApp = ({
   device,
   theme,
 }: RawProps & {
-  navigation: any;
+  navigation: StackNavigationProp<ParamListBase>;
   wording: string;
   tokenContext?: TokenCurrency | null | undefined;
   isDeviceBlocker?: boolean;
@@ -492,7 +492,7 @@ export function renderAllowOpeningApp({
   device,
   theme,
 }: RawProps & {
-  navigation: any;
+  navigation: StackNavigationProp<ParamListBase>;
   wording: string;
   tokenContext?: TokenCurrency | undefined | null;
   isDeviceBlocker?: boolean;
@@ -535,7 +535,7 @@ export function renderError({
   managerAppName,
   navigation,
 }: RawProps & {
-  navigation?: any;
+  navigation?: StackNavigationProp<ParamListBase>;
   error: Error;
   onRetry?: (() => void) | null;
   managerAppName?: string;
@@ -583,8 +583,7 @@ export function renderDeviceNotOnboarded({
 }: {
   t: TFunction;
   device: Device;
-  // TODO: correctly type the navigation prop here AND in the DeviceAction component
-  navigation: any;
+  navigation: StackNavigationProp<ParamListBase>;
 }) {
   const navigateToOnboarding = () => {
     if (device.modelId === DeviceModelId.nanoFTS) {
@@ -790,8 +789,8 @@ export function LoadingAppInstall({
 }
 
 type WarningOutdatedProps = RawProps & {
-  colors: any;
-  navigation: any;
+  colors: Theme["colors"];
+  navigation: StackNavigationProp<ParamListBase>;
   appName: string;
   passWarning: () => void;
 };

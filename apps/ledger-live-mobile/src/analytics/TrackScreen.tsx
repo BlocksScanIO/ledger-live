@@ -8,7 +8,7 @@ import { previousRouteNameRef, currentRouteNameRef } from "./screenRefs";
 type Props = {
   [key: string]: unknown;
 } & {
-  category: string;
+  category?: string;
   name?: string;
 };
 

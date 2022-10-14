@@ -70,9 +70,18 @@ export default function ReceiveFunds({ navigation, route }: Props) {
     account => {
       const balance = getAccountSpendableBalance(account);
 
-      if (!isNaN(minBalance) && balance.lte(minBalance)) {
+      if (
+        typeof minBalance !== "undefined" &&
+        !isNaN(minBalance) &&
+        balance.lte(minBalance)
+      ) {
         setError(new NotEnoughBalance());
       } else {
+        // FIXME: Double check if this works because it seems very weird.
+        // 1) "next" does not seem to be passed as a param anywhere
+        // 2) This component belongs to "SendFundsNavigator", but ReceiveConnectDevice does not.
+        //    It belongs to "ReceiveFundsNavigator".
+        // @ts-expect-error this seems impossible to type correctly…
         navigation.navigate(next || ScreenName.ReceiveConnectDevice, {
           ...route.params,
           account,

@@ -236,9 +236,9 @@ export const useAnalytics = () => {
   };
 };
 export const screen = (
-  category: string,
-  name: string | null | undefined,
-  properties?: Record<string, any> | null | undefined,
+  category?: string,
+  name?: string | null,
+  properties?: Record<string, unknown> | null | undefined,
 ) => {
   const title = `Page ${category + (name ? ` ${name}` : "")}`;
   Sentry.addBreadcrumb({

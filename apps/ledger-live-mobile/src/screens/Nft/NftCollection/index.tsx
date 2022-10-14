@@ -15,6 +15,7 @@ import { useNavigation, useTheme } from "@react-navigation/native";
 import { groupAccountOperationsByDay } from "@ledgerhq/live-common/account/index";
 import Animated, { Value, event } from "react-native-reanimated";
 import {
+  Account,
   DailyOperationsSection,
   Operation,
   ProtoNFT,
@@ -85,13 +86,14 @@ const NftCollection = ({ route }: NavigationProps) => {
     [nftCount, collection],
   );
   const sendToken = () => {
-    navigation.navigate(NavigatorName.SendFunds, {
-      screen: ScreenName.SendNft,
-      params: {
-        account,
-        collection,
-      },
-    });
+    account &&
+      navigation.navigate(NavigatorName.SendFunds, {
+        screen: ScreenName.SendNft,
+        params: {
+          account: account as Account,
+          collection,
+        },
+      });
   };
 
   const renderNftItem = useCallback(
