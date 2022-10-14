@@ -3,7 +3,7 @@ declare module "react-native-redash/lib/module/v1" {
 }
 
 // See: https://reactnative.dev/docs/hermes#confirming-hermes-is-in-use
-declare var HermesInternal: string;
+declare let HermesInternal: string;
 
 // For image imports
 declare module "*.png" {

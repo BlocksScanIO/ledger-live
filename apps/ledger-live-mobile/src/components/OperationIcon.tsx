@@ -18,7 +18,7 @@ type OwnProps = {
   size: number;
   operation: Operation;
   account: AccountLike;
-  parentAccount: Account | null | undefined;
+  parentAccount?: Account | null;
 };
 type Props = OwnProps & {
   type: OperationType;

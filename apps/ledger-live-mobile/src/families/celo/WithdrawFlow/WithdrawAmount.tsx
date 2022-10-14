@@ -28,12 +28,14 @@ import InfoIcon from "../../../components/InfoIcon";
 import Line from "../components/Line";
 import Words from "../components/Words";
 import ErrorAndWarning from "../components/ErrorAndWarning";
-import type { StackNavigatorProps } from "../../../components/RootNavigator/types/helpers";
+import type {
+  BaseComposite,
+  StackNavigatorProps,
+} from "../../../components/RootNavigator/types/helpers";
 import type { CeloWithdrawFlowParamList } from "./types";
 
-type Props = StackNavigatorProps<
-  CeloWithdrawFlowParamList,
-  ScreenName.CeloWithdrawAmount
+type Props = BaseComposite<
+  StackNavigatorProps<CeloWithdrawFlowParamList, ScreenName.CeloWithdrawAmount>
 >;
 
 export default function WithdrawAmount({ navigation, route }: Props) {
@@ -174,7 +176,12 @@ export default function WithdrawAmount({ navigation, route }: Props) {
           <ErrorAndWarning warning={warning} />
         )}
         <View style={styles.feesRow}>
-          <SendRowsFee account={account} transaction={transaction} />
+          <SendRowsFee
+            account={account}
+            transaction={transaction}
+            navigation={navigation}
+            route={route}
+          />
         </View>
         <Button
           event="CeloWithdrawAmountContinue"

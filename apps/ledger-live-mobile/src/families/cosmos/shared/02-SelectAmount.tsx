@@ -31,6 +31,7 @@ import type { CosmosRedelegationFlowParamList } from "../RedelegationFlow/types"
 import type { OsmosisDelegationFlowParamList } from "../../osmosis/DelegationFlow/types";
 import { OsmosisRedelegationFlowParamList } from "../../osmosis/RedelegationFlow/types";
 import { OsmosisUndelegationFlowParamList } from "../../osmosis/UndelegationFlow/types";
+import { CosmosUndelegationFlowParamList } from "../UndelegationFlow/types";
 
 type Props =
   | StackNavigatorProps<
@@ -53,6 +54,10 @@ type Props =
   | StackNavigatorProps<
       OsmosisUndelegationFlowParamList,
       ScreenName.OsmosisUndelegationAmount
+    >
+  | StackNavigatorProps<
+      CosmosUndelegationFlowParamList,
+      ScreenName.CosmosUndelegationAmount
     >;
 
 function DelegationAmount({ navigation, route }: Props) {

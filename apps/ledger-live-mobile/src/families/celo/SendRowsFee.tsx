@@ -24,7 +24,11 @@ import type { LendingSupplyFlowNavigatorParamList } from "../../components/RootN
 import type { LendingWithdrawFlowNavigatorParamList } from "../../components/RootNavigator/types/LendingWithdrawFlowNavigator";
 import type { SignTransactionNavigatorParamList } from "../../components/RootNavigator/types/SignTransactionNavigator";
 import type { SwapNavigatorParamList } from "../../components/RootNavigator/types/SwapNavigator";
-import { CeloLockFlowParamList } from "./LockFlow/types";
+import type { CeloLockFlowParamList } from "./LockFlow/types";
+import type { CeloRevokeFlowFlowParamList } from "./RevokeFlow/types";
+import type { CeloUnlockFlowParamList } from "./UnlockFlow/types";
+import type { CeloVoteFlowParamList } from "./VoteFlow/types";
+import type { CeloWithdrawFlowParamList } from "./WithdrawFlow/types";
 
 type Props = {
   account: AccountLike;
@@ -52,7 +56,17 @@ type Props = {
       ScreenName.LendingWithdrawSummary
     >
   | StackNavigatorProps<CeloLockFlowParamList, ScreenName.CeloLockAmount>
-  | StackNavigatorProps<SwapNavigatorParamList, ScreenName.SwapSelectFees>,
+  | StackNavigatorProps<SwapNavigatorParamList, ScreenName.SwapSelectFees>
+  | StackNavigatorProps<
+      CeloRevokeFlowFlowParamList,
+      ScreenName.CeloRevokeAmount
+    >
+  | StackNavigatorProps<CeloUnlockFlowParamList, ScreenName.CeloUnlockAmount>
+  | StackNavigatorProps<CeloVoteFlowParamList, ScreenName.CeloVoteAmount>
+  | StackNavigatorProps<
+      CeloWithdrawFlowParamList,
+      ScreenName.CeloWithdrawAmount
+    >,
   StackNavigatorProps<BaseNavigatorStackParamList>
 >;
 export default function CeloFeeRow({ account, transaction }: Props) {

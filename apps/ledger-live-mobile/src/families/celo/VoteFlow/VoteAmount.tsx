@@ -13,7 +13,6 @@ import { useSelector } from "react-redux";
 import { Trans } from "react-i18next";
 import invariant from "invariant";
 import { useTheme } from "@react-navigation/native";
-import type { Transaction as CeloTransaction } from "@ledgerhq/live-common/families/celo/types";
 import { getAccountUnit } from "@ledgerhq/live-common/account/index";
 import { getAccountBridge } from "@ledgerhq/live-common/bridge/index";
 import { accountScreenSelector } from "../../../reducers/accounts";
@@ -27,12 +26,14 @@ import CurrencyInput from "../../../components/CurrencyInput";
 import TranslatedError from "../../../components/TranslatedError";
 import SendRowsFee from "../SendRowsFee";
 import { getFirstStatusError } from "../../helpers";
-import type { StackNavigatorProps } from "../../../components/RootNavigator/types/helpers";
+import type {
+  BaseComposite,
+  StackNavigatorProps,
+} from "../../../components/RootNavigator/types/helpers";
 import type { CeloVoteFlowParamList } from "./types";
 
-type Props = StackNavigatorProps<
-  CeloVoteFlowParamList,
-  ScreenName.CeloVoteAmount
+type Props = BaseComposite<
+  StackNavigatorProps<CeloVoteFlowParamList, ScreenName.CeloVoteAmount>
 >;
 
 export default function VoteAmount({ navigation, route }: Props) {
@@ -176,7 +177,9 @@ export default function VoteAmount({ navigation, route }: Props) {
                 </View>
                 <SendRowsFee
                   account={account}
-                  transaction={transaction as CeloTransaction}
+                  transaction={transaction}
+                  navigation={navigation}
+                  route={route}
                 />
                 <View style={styles.continueWrapper}>
                   <Button

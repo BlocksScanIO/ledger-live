@@ -10,7 +10,6 @@ function FocusedTextInput(
   useImperativeHandle(ref, () => inputRef.current);
   // FIXME: do we really want this useEffect to trigger every type the props object change????
   useEffect(() => {
-    // eslint-disable-next-line react/prop-types
     props.autoFocus && inputRef.current?.focus();
   }, [props, ref]);
   return <TextInput ref={inputRef} {...props} />;

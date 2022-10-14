@@ -28,12 +28,14 @@ import CurrencyInput from "../../../components/CurrencyInput";
 import TranslatedError from "../../../components/TranslatedError";
 import SendRowsFee from "../SendRowsFee";
 import { getFirstStatusError } from "../../helpers";
-import type { StackNavigatorProps } from "../../../components/RootNavigator/types/helpers";
+import type {
+  BaseComposite,
+  StackNavigatorProps,
+} from "../../../components/RootNavigator/types/helpers";
 import { CeloRevokeFlowFlowParamList } from "./types";
 
-type Props = StackNavigatorProps<
-  CeloRevokeFlowFlowParamList,
-  ScreenName.CeloRevokeAmount
+type Props = BaseComposite<
+  StackNavigatorProps<CeloRevokeFlowFlowParamList, ScreenName.CeloRevokeAmount>
 >;
 
 export default function VoteAmount({ navigation, route }: Props) {
@@ -178,7 +180,9 @@ export default function VoteAmount({ navigation, route }: Props) {
                 </View>
                 <SendRowsFee
                   account={account}
-                  transaction={transaction as CeloTransaction}
+                  transaction={transaction}
+                  navigation={navigation}
+                  route={route}
                 />
                 <View style={styles.continueWrapper}>
                   <Button

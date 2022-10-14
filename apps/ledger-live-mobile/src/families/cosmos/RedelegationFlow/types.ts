@@ -27,7 +27,9 @@ export type CosmosRedelegationFlowParamList = {
     value?: BigNumber;
     redelegatedBalance?: BigNumber;
     mode?: string;
-    nextScreen: ScreenName.CosmosRedelegationValidator;
+    nextScreen:
+      | ScreenName.CosmosRedelegationValidator
+      | ScreenName.CosmosRedelegationSelectDevice;
   };
   [ScreenName.CosmosRedelegationAmount]: {
     accountId: string;
@@ -40,7 +42,9 @@ export type CosmosRedelegationFlowParamList = {
     value?: BigNumber;
     redelegatedBalance?: BigNumber;
     mode?: string;
-    nextScreen: ScreenName.CosmosRedelegationValidator;
+    nextScreen:
+      | ScreenName.CosmosRedelegationValidator
+      | ScreenName.CosmosRedelegationSelectDevice;
   };
   [ScreenName.CosmosRedelegationSelectDevice]: {
     accountId: string;
