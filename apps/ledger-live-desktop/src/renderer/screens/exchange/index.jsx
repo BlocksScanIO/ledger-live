@@ -61,8 +61,10 @@ const LiveAppExchange = ({ appId }: { appId: string }) => {
 
   let manifest = useRemoteLiveAppManifest(appId);
 
-  if (getEnv("BUY_SELL_TEST_URL")) {
-    manifest = { ...manifest, url: getEnv("BUY_SELL_TEST_URL") };
+  const buySellTestUrl = getEnv("BUY_SELL_TEST_URL");
+
+  if (buySellTestUrl) {
+    manifest = { ...manifest, url: buySellTestUrl };
   }
 
   const themeType = useTheme("colors.palette.type");
