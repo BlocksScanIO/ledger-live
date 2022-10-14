@@ -52,7 +52,7 @@ export default function ExchangeSelectCrypto({ navigation, route }: Props) {
   } = params;
   const rampCatalog = useRampCatalog();
   const cryptoCurrencies = useRampCatalogCurrencies(
-    mode === "buy" ? rampCatalog.value.onRamp : rampCatalog.value.offRamp,
+    mode === "buy" ? rampCatalog!.value!.onRamp : rampCatalog!.value!.offRamp,
   );
   const sortedCryptoCurrencies = useCurrenciesByMarketcap(cryptoCurrencies);
   const onPressCurrency = useCallback(

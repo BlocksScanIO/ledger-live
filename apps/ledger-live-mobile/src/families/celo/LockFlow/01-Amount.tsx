@@ -32,12 +32,14 @@ import TranslatedError from "../../../components/TranslatedError";
 
 import { getFirstStatusError, hasStatusError } from "../../helpers";
 import SendRowsFee from "../SendRowsFee";
-import { StackNavigatorProps } from "../../../components/RootNavigator/types/helpers";
+import {
+  BaseComposite,
+  StackNavigatorProps,
+} from "../../../components/RootNavigator/types/helpers";
 import { CeloLockFlowParamList } from "./types";
 
-type Props = StackNavigatorProps<
-  CeloLockFlowParamList,
-  ScreenName.CeloLockAmount
+type Props = BaseComposite<
+  StackNavigatorProps<CeloLockFlowParamList, ScreenName.CeloLockAmount>
 >;
 
 export default function LockAmount({ navigation, route }: Props) {
@@ -207,7 +209,9 @@ export default function LockAmount({ navigation, route }: Props) {
                 </View>
                 <SendRowsFee
                   account={account}
-                  transaction={transaction as CeloTransaction}
+                  transaction={transaction}
+                  navigation={navigation}
+                  route={route}
                 />
                 <View style={styles.continueWrapper}>
                   <Button

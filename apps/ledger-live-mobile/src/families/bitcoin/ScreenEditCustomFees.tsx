@@ -3,7 +3,7 @@ import invariant from "invariant";
 import React, { useState, useCallback } from "react";
 import { useTranslation, Trans } from "react-i18next";
 import { Keyboard, StyleSheet, View, SafeAreaView } from "react-native";
-import { useTheme } from "@react-navigation/native";
+import { CompositeScreenProps, useTheme } from "@react-navigation/native";
 import { getAccountBridge } from "@ledgerhq/live-common/bridge/index";
 import { useSelector } from "react-redux";
 import Button from "../../components/Button";
@@ -15,16 +15,47 @@ import TextInput from "../../components/FocusedTextInput";
 import { StackNavigatorProps } from "../../components/RootNavigator/types/helpers";
 import { SendFundsNavigatorStackParamList } from "../../components/RootNavigator/types/SendFundsNavigator";
 import { ScreenName } from "../../const";
+import { BaseNavigatorStackParamList } from "../../components/RootNavigator/types/BaseNavigator";
+import { LendingEnableFlowParamsList } from "../../components/RootNavigator/types/LendingEnableFlowNavigator";
+import { LendingSupplyFlowNavigatorParamList } from "../../components/RootNavigator/types/LendingSupplyFlowNavigator";
+import { LendingWithdrawFlowNavigatorParamList } from "../../components/RootNavigator/types/LendingWithdrawFlowNavigator";
+import { SignTransactionNavigatorParamList } from "../../components/RootNavigator/types/SignTransactionNavigator";
+import { SwapNavigatorParamList } from "../../components/RootNavigator/types/SwapNavigator";
 
 const options = {
   title: <Trans i18nKey="send.summary.fees" />,
   headerLeft: undefined,
 };
 
-type Props = StackNavigatorProps<
-  SendFundsNavigatorStackParamList,
-  ScreenName.BitcoinEditCustomFees
+type Navigation = CompositeScreenProps<
+  | StackNavigatorProps<
+      SendFundsNavigatorStackParamList,
+      ScreenName.BitcoinEditCustomFees
+    >
+  | StackNavigatorProps<
+      SignTransactionNavigatorParamList,
+      ScreenName.BitcoinEditCustomFees
+    >
+  | StackNavigatorProps<
+      LendingEnableFlowParamsList,
+      ScreenName.BitcoinEditCustomFees
+    >
+  | StackNavigatorProps<
+      LendingSupplyFlowNavigatorParamList,
+      ScreenName.BitcoinEditCustomFees
+    >
+  | StackNavigatorProps<
+      LendingWithdrawFlowNavigatorParamList,
+      ScreenName.BitcoinEditCustomFees
+    >
+  | StackNavigatorProps<
+      SwapNavigatorParamList,
+      ScreenName.BitcoinEditCustomFees
+    >,
+  StackNavigatorProps<BaseNavigatorStackParamList>
 >;
+
+type Props = Navigation;
 
 function BitcoinEditCustomFees({ navigation, route }: Props) {
   const { colors } = useTheme();
@@ -49,6 +80,7 @@ function BitcoinEditCustomFees({ navigation, route }: Props) {
     setSatPerByte && setSatPerByte(BigNumber(ownSatPerByte || 0));
     const bridge = getAccountBridge(account, parentAccount);
     const { currentNavigation } = route.params;
+    // @ts-expect-error ask your mom about it
     navigation.navigate(currentNavigation, {
       ...route.params,
       accountId: account.id,

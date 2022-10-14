@@ -1,13 +1,17 @@
 import { useCallback, useMemo } from "react";
-import { useNavigation } from "@react-navigation/native";
+import { CompositeScreenProps, useNavigation } from "@react-navigation/native";
 import { useRemoteLiveAppContext } from "@ledgerhq/live-common/platform/providers/RemoteLiveAppProvider/index";
 import { filterPlatformApps } from "@ledgerhq/live-common/platform/filters";
 import { getPlatformVersion } from "@ledgerhq/live-common/platform/version";
 import { findCryptoCurrencyById } from "@ledgerhq/live-common/currencies/index";
 import { AppManifest } from "@ledgerhq/live-common/platform/types";
 import { NavigatorName, ScreenName } from "../const";
-import { StackNavigatorNavigation } from "../components/RootNavigator/types/helpers";
-import { BaseNavigatorStackParamList } from "../components/RootNavigator/types/BaseNavigator";
+import {
+  BaseComposite,
+  StackNavigatorProps,
+} from "../components/RootNavigator/types/helpers";
+import { MainNavigatorParamList } from "../components/RootNavigator/types/MainNavigator";
+import { ManagerNavigatorStackParamList } from "../components/RootNavigator/types/ManagerNavigator";
 
 type Screens =
   | ScreenName.GeneralSettings
@@ -53,10 +57,15 @@ function getSettingsScreen(pathname: string): Screens {
   return screen as Screens;
 }
 
+type Navigation = BaseComposite<
+  CompositeScreenProps<
+    StackNavigatorProps<ManagerNavigatorStackParamList>,
+    StackNavigatorProps<MainNavigatorParamList>
+  >
+>;
 const emptyObject: AppManifest[] = [];
 export function useDeepLinkHandler() {
-  const { navigate } =
-    useNavigation<StackNavigatorNavigation<BaseNavigatorStackParamList>>();
+  const { navigate } = useNavigation<Navigation["navigation"]>();
   const { state } = useRemoteLiveAppContext();
   const manifests = state?.value?.liveAppByIndex || emptyObject;
   const filteredManifests = useMemo(() => {
@@ -177,7 +186,7 @@ export function useDeepLinkHandler() {
 
         case "portfolio":
         default:
-          navigate(NavigatorName.Main, {
+          navigate(NavigatorName.Portfolio, {
             screen: ScreenName.Portfolio,
           });
           break;
