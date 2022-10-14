@@ -1,4 +1,5 @@
 import { DeviceModelId } from "@ledgerhq/types-devices";
+import { TFunction } from "i18next";
 
 export type Step = {
   id: string;
@@ -27,7 +28,7 @@ export type OnboardingContextType = {
   resetCurrentStep: Noop;
 };
 export type OnboardingStepProps = OnboardingContextType & {
-  t: any;
+  t: TFunction;
   navigation: any;
   next: Noop;
   prev: Noop;

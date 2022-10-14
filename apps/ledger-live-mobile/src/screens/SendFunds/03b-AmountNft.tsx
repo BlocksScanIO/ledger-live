@@ -23,15 +23,20 @@ import Button from "../../components/Button";
 import LText from "../../components/LText";
 import { ScreenName } from "../../const";
 import type { SendFundsNavigatorStackParamList } from "../../components/RootNavigator/types/SendFundsNavigator";
-import { StackNavigatorProps } from "../../components/RootNavigator/types/helpers";
+import {
+  BaseComposite,
+  StackNavigatorProps,
+} from "../../components/RootNavigator/types/helpers";
 
-type Props = StackNavigatorProps<
-  SendFundsNavigatorStackParamList,
-  ScreenName.SendAmountNft
+type Props = BaseComposite<
+  StackNavigatorProps<
+    SendFundsNavigatorStackParamList,
+    ScreenName.SendAmountNft
+  >
 >;
 
 const SendAmountNFT = ({ route }: Props) => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<Props["navigation"]>();
   const { t } = useTranslation();
 
   const { colors } = useTheme();
@@ -81,12 +86,15 @@ const SendAmountNFT = ({ route }: Props) => {
   );
 
   const onContinue = useCallback(() => {
+    if (!account || !transaction) return;
     navigation.navigate(ScreenName.SendSummary, {
-      accountId: account?.id,
+      accountId: account.id,
       parentId: parentAccount?.id,
       transaction,
+      currentNavigation: ScreenName.SendSummary,
+      nextNavigation: ScreenName.SendSelectDevice,
     });
-  }, [account, parentAccount, navigation, transaction]);
+  }, [account, navigation, parentAccount?.id, transaction]);
   const blur = useCallback(() => Keyboard.dismiss(), []);
 
   const error = useMemo(() => {

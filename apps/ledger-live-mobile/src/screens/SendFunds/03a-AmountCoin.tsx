@@ -102,10 +102,13 @@ export default function SendAmountCoin({ navigation, route }: Props) {
     );
   }, [setTransaction, account, parentAccount, transaction]);
   const onContinue = useCallback(() => {
+    if (!transaction) return;
     navigation.navigate(ScreenName.SendSummary, {
       accountId: account.id,
-      parentId: parentAccount && parentAccount.id,
+      parentId: parentAccount?.id,
       transaction,
+      currentNavigation: ScreenName.SendSummary,
+      nextNavigation: ScreenName.SendSelectDevice,
     });
   }, [account, parentAccount, navigation, transaction]);
   const [bridgeErr, setBridgeErr] = useState(bridgeError);

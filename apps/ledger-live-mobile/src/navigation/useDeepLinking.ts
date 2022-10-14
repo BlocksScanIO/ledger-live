@@ -4,13 +4,20 @@ import { useRemoteLiveAppContext } from "@ledgerhq/live-common/platform/provider
 import { filterPlatformApps } from "@ledgerhq/live-common/platform/filters";
 import { getPlatformVersion } from "@ledgerhq/live-common/platform/version";
 import { findCryptoCurrencyById } from "@ledgerhq/live-common/currencies/index";
-import { LiveAppManifest } from "@ledgerhq/live-common/platform/providers/types";
 import { AppManifest } from "@ledgerhq/live-common/platform/types";
 import { NavigatorName, ScreenName } from "../const";
 import { StackNavigatorNavigation } from "../components/RootNavigator/types/helpers";
 import { BaseNavigatorStackParamList } from "../components/RootNavigator/types/BaseNavigator";
 
-function getSettingsScreen(pathname: string) {
+type Screens =
+  | ScreenName.GeneralSettings
+  | ScreenName.AccountsSettings
+  | ScreenName.AboutSettings
+  | ScreenName.HelpSettings
+  | ScreenName.DeveloperSettings
+  | ScreenName.SettingsScreen;
+
+function getSettingsScreen(pathname: string): Screens {
   const secondPath = pathname.replace(/(^\/+|\/+$)/g, "");
   let screen;
 
@@ -43,11 +50,10 @@ function getSettingsScreen(pathname: string) {
       screen = ScreenName.SettingsScreen;
   }
 
-  return screen;
+  return screen as Screens;
 }
 
-// To avoid recreating a ref on each render and triggering hooks
-const emptyObject: LiveAppManifest[] = [];
+const emptyObject: AppManifest[] = [];
 export function useDeepLinkHandler() {
   const { navigate } =
     useNavigation<StackNavigatorNavigation<BaseNavigatorStackParamList>>();
@@ -125,11 +131,15 @@ export function useDeepLinkHandler() {
           });
           break;
 
-        case "settings":
-          navigate(NavigatorName.Settings, {
-            screen: getSettingsScreen(pathname),
-          });
+        case "settings": {
+          const screen = getSettingsScreen(pathname);
+          if (screen) {
+            navigate(NavigatorName.Settings, {
+              screen,
+            });
+          }
           break;
+        }
 
         case "discover": {
           const dapp =

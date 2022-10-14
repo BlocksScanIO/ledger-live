@@ -116,9 +116,12 @@ export default function SendSelectRecipient({ navigation, route }: Props) {
     // ERC721 transactions are always sending 1 NFT, so amount step is unecessary
     if (shouldSkipAmount) {
       return navigation.navigate(ScreenName.SendSummary, {
+        ...route.params,
         accountId: account.id,
         parentId: parentAccount?.id,
         transaction,
+        currentNavigation: ScreenName.SendSummary,
+        nextNavigation: ScreenName.SendSelectDevice,
       });
     }
 
@@ -132,16 +135,17 @@ export default function SendSelectRecipient({ navigation, route }: Props) {
 
     return navigation.navigate(ScreenName.SendAmountCoin, {
       accountId: account.id,
-      parentId: parentAccount && parentAccount.id,
+      parentId: parentAccount?.id,
       transaction,
     });
   }, [
+    account,
+    transaction,
     shouldSkipAmount,
     isNftSend,
     navigation,
-    account,
-    parentAccount,
-    transaction,
+    parentAccount?.id,
+    route.params,
   ]);
   if (!account || !transaction) return null;
   const error = withoutHiddenError(status.errors.recipient);
@@ -269,9 +273,13 @@ export default function SendSelectRecipient({ navigation, route }: Props) {
   );
 }
 
-const IconQRCode = ({ size, color }: { size: number; color: string }) => (
-  <Icon name="qrcode" size={size} color={color} />
-);
+const IconQRCode = ({
+  size = 16,
+  color,
+}: {
+  size?: number;
+  color?: string;
+}) => <Icon name="qrcode" size={size} color={color} />;
 
 const styles = StyleSheet.create({
   root: {

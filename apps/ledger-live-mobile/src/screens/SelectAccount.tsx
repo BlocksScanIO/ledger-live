@@ -95,7 +95,7 @@ export default function ReceiveFunds({ navigation, route }: Props) {
 
   return (
     <Flex flex={1} color="background.main">
-      <TrackScreen category={category} name="SelectAccount" />
+      <TrackScreen category={category || ""} name="SelectAccount" />
       <Flex p={6}>
         <AccountSelector
           list={allAccounts}

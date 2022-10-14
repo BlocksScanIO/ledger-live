@@ -58,8 +58,6 @@ const ScanRecipient = ({ route, navigation }: NavigationProps) => {
     }
   }, [onResult]);
 
-  // FIXME: screenName IS NOT DECLARED ON Scanner, NOT SURE OF THE IMPACT
-  // return <Scanner screenName={ScreenName.SendCoin} onResult={onResult} />;
   return <Scanner onResult={onResult} />;
 };
 
