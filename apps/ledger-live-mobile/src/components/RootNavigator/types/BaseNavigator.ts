@@ -1,5 +1,8 @@
 import type { Operation, AccountLike } from "@ledgerhq/types-live";
-import type { NavigatorScreenParams } from "@react-navigation/native";
+import type {
+  NavigatorScreenParams,
+  ParamListBase,
+} from "@react-navigation/native";
 import type { RampCatalogEntry } from "@ledgerhq/live-common/platform/providers/RampCatalogProvider/types";
 import type {
   CryptoCurrency,
@@ -72,9 +75,6 @@ import type { SolanaDelegationFlowParamList } from "../../../families/solana/Del
 import type { StellarAddAssetFlowParamList } from "../../../families/stellar/AddAssetFlow/types";
 import type { TezosDelegationFlowParamList } from "../../../families/tezos/DelegationFlow/types";
 import type { TronVoteFlowParamList } from "../../../families/tron/VoteFlow/types";
-// This seem impossible to prevent
-// eslint-disable-next-line import/no-cycle
-import { RootStackParamList } from "./RootNavigator";
 
 type TradeParams = {
   type: "onRamp" | "offRamp";
@@ -85,12 +85,11 @@ type TradeParams = {
 };
 
 export type NavigateInput<
-  T extends keyof BaseNavigatorStackParamList &
-    keyof RootStackParamList = keyof BaseNavigatorStackParamList &
-    keyof RootStackParamList,
+  ParamList extends ParamListBase = ParamListBase,
+  T extends keyof ParamList = keyof ParamList,
 > = {
   name: T;
-  params: BaseNavigatorStackParamList[T] | undefined;
+  params: ParamList[T] | undefined;
 };
 
 export type PathToDeviceParam = PropertyPath;

@@ -40,9 +40,9 @@ type ChooseDeviceProps = Props & {
 };
 
 const ChooseDevice: React.FC<ChooseDeviceProps> = ({ isFocused }) => {
-  const [device, setDevice] = useState<Device | undefined>();
+  const [device, setDevice] = useState<Device | null>();
 
-  const [chosenDevice, setChosenDevice] = useState<Device | undefined>();
+  const [chosenDevice, setChosenDevice] = useState<Device | null>();
   const [showMenu, setShowMenu] = useState<boolean>(false);
 
   const navigation = useNavigation<NavigationProps["navigation"]>();
@@ -65,7 +65,7 @@ const ChooseDevice: React.FC<ChooseDeviceProps> = ({ isFocused }) => {
 
   const onHideMenu = () => setShowMenu(false);
 
-  const onSelect = (result: unknown) => {
+  const onSelect = (result: Device) => {
     setDevice(undefined);
 
     if (result && "result" in result) {

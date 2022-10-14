@@ -1,7 +1,5 @@
 import { NavigatorScreenParams } from "@react-navigation/native";
 import { NavigatorName } from "../../../const";
-// This seem impossible to prevent
-// eslint-disable-next-line import/no-cycle
 import { BaseNavigatorStackParamList } from "./BaseNavigator";
 import { BaseOnboardingNavigatorParamList } from "./BaseOnboardingNavigator";
 import { ImportAccountsNavigatorParamList } from "./ImportAccountsNavigator";

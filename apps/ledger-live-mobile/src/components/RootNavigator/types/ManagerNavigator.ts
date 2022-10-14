@@ -11,7 +11,7 @@ export type ManagerNavigatorStackParamList = {
         tab?: ManagerTab;
         installApp?: string;
         firmwareUpdate?: boolean;
-        device?: Device;
+        device?: Device | null;
         appsToRestore?: string[];
       }
     | undefined;

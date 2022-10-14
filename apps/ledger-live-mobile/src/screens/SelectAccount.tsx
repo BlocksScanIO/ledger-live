@@ -81,6 +81,8 @@ export default function ReceiveFunds({ navigation, route }: Props) {
         // 1) "next" does not seem to be passed as a param anywhere
         // 2) This component belongs to "SendFundsNavigator", but ReceiveConnectDevice does not.
         //    It belongs to "ReceiveFundsNavigator".
+        // Update: next is never passed as a dynamic param, it is only defined as an initial param
+        // Thus, next is always defined and the || condition seems to be kinda stupid.
         // @ts-expect-error this seems impossible to type correctly…
         navigation.navigate(next || ScreenName.ReceiveConnectDevice, {
           ...route.params,

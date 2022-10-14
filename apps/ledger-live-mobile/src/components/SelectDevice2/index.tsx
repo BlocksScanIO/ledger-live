@@ -2,7 +2,7 @@ import React, { useMemo, useCallback, useEffect, useState } from "react";
 import { Trans, useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { discoverDevices } from "@ledgerhq/live-common/hw/index";
-import { useNavigation } from "@react-navigation/native";
+import { CompositeScreenProps, useNavigation } from "@react-navigation/native";
 import { Text, Flex, Icons, BottomDrawer } from "@ledgerhq/native-ui";
 import { Device } from "@ledgerhq/live-common/hw/actions/types";
 import { useBleDevicesScanning } from "@ledgerhq/live-common/ble/hooks/useBleDevicesScanning";
@@ -24,9 +24,14 @@ import {
   StackNavigatorProps,
 } from "../RootNavigator/types/helpers";
 import { ManagerNavigatorStackParamList } from "../RootNavigator/types/ManagerNavigator";
+import { MainNavigatorParamList } from "../RootNavigator/types/MainNavigator";
+import { NavigateInput } from "../RootNavigator/types/BaseNavigator";
 
 type Navigation = BaseComposite<
-  StackNavigatorProps<ManagerNavigatorStackParamList>
+  CompositeScreenProps<
+    StackNavigatorProps<ManagerNavigatorStackParamList>,
+    StackNavigatorProps<MainNavigatorParamList>
+  >
 >;
 
 type Props = {
@@ -143,19 +148,23 @@ export default function SelectDevice({ onSelect }: Props) {
   }, [navigation]);
 
   const onPairDevices = useCallback(() => {
+    const navigateInput: NavigateInput<
+      MainNavigatorParamList,
+      NavigatorName.Manager
+    > = {
+      name: NavigatorName.Manager,
+      params: {
+        screen: ScreenName.Manager,
+        params: {
+          device: null,
+        },
+      },
+    };
     navigation.navigate(ScreenName.BleDevicePairingFlow, {
       areKnownDevicesDisplayed: true,
       onSuccessAddToKnownDevices: true,
       onSuccessNavigateToConfig: {
-        navigateInput: {
-          name: NavigatorName.Manager,
-          params: {
-            screen: ScreenName.Manager,
-            params: {
-              device: null,
-            },
-          },
-        },
+        navigateInput,
         pathToDeviceParam: "params.params.device",
       },
     });

@@ -38,7 +38,10 @@ import {
   setLastConnectedDevice,
   setReadOnlyMode,
 } from "../../actions/settings";
-import { BaseNavigatorStackParamList } from "../../components/RootNavigator/types/BaseNavigator";
+import {
+  BaseNavigatorStackParamList,
+  NavigateInput,
+} from "../../components/RootNavigator/types/BaseNavigator";
 import { RootStackParamList } from "../../components/RootNavigator/types/RootNavigator";
 import { SyncOnboardingStackParamList } from "../../components/RootNavigator/types/SyncOnboardingNavigator";
 
@@ -198,6 +201,24 @@ export const SyncOnboarding = ({
   );
 
   const goBackToPairingFlow = useCallback(() => {
+    const navigateInput: NavigateInput<
+      RootStackParamList,
+      NavigatorName.BaseOnboarding
+    > = {
+      name: NavigatorName.BaseOnboarding,
+      params: {
+        screen: NavigatorName.SyncOnboarding,
+        params: {
+          screen: ScreenName.SyncOnboardingCompanion,
+          params: {
+            // FIXME: A null device will crash SyncOnboarding…
+            // @ts-expect-error This seems very wrong :(
+            device: null,
+          },
+        },
+      },
+    };
+
     // On pairing success, navigate to the Sync Onboarding Companion
     // Replace to avoid going back to this screen on return from the pairing flow
     navigation.navigate(NavigatorName.Base, {
@@ -209,18 +230,7 @@ export const SyncOnboarding = ({
         onSuccessAddToKnownDevices: false,
         onSuccessNavigateToConfig: {
           navigationType: "navigate",
-          navigateInput: {
-            name: NavigatorName.BaseOnboarding,
-            params: {
-              screen: NavigatorName.SyncOnboarding,
-              params: {
-                screen: ScreenName.SyncOnboardingCompanion,
-                params: {
-                  device: null,
-                },
-              },
-            },
-          },
+          navigateInput,
           pathToDeviceParam: "params.params.params.device",
         },
       },

@@ -25,6 +25,7 @@ import DiscoverCard from "../../Discover/DiscoverCard";
 import Illustration from "../../../images/illustration/Illustration";
 import setupLedgerImg from "../../../images/illustration/Shared/_SetupLedger.png";
 import { RootStackParamList } from "../../../components/RootNavigator/types/RootNavigator";
+import { NavigateInput } from "../../../components/RootNavigator/types/BaseNavigator";
 
 const nanoX = {
   SvgDevice: nanoXSvg,
@@ -83,13 +84,27 @@ function OnboardingStepDeviceSelection() {
   const next = (deviceModelId: DeviceModelId) => {
     // Add NanoX.id, NanoSP.id etc, to the array when supported
     if ([nanoFTS.id].includes(deviceModelId)) {
+      const navigateInput: NavigateInput<
+        RootStackParamList,
+        NavigatorName.BaseOnboarding
+      > = {
+        name: NavigatorName.BaseOnboarding,
+        params: {
+          screen: NavigatorName.SyncOnboarding,
+          params: {
+            screen: ScreenName.SyncOnboardingCompanion,
+            params: {
+              // FIXME: A null device will crash SyncOnboarding…
+              // @ts-expect-error This seems to be very wrong :(
+              device: null,
+            },
+          },
+        },
+      };
       // On pairing success, navigate to the Sync Onboarding Companion
       // navigation.push on stack navigation because with navigation.navigate
       // it could not go back to this screen in certain cases.
-      // FIXME: bindings seem to be wrong here
-      (
-        navigation as unknown as StackNavigatorNavigation<RootStackParamList>
-      ).push(NavigatorName.Base, {
+      navigation.push(NavigatorName.Base, {
         screen: ScreenName.BleDevicePairingFlow,
         params: {
           // TODO: for now we remove this
@@ -100,18 +115,7 @@ function OnboardingStepDeviceSelection() {
             // navigation.push on success because it could not correctly
             // go back to the previous screens (BLE and then this screen).
             navigationType: "push",
-            navigateInput: {
-              name: NavigatorName.BaseOnboarding,
-              params: {
-                screen: NavigatorName.SyncOnboarding,
-                params: {
-                  screen: ScreenName.SyncOnboardingCompanion,
-                  params: {
-                    device: null,
-                  },
-                },
-              },
-            },
+            navigateInput,
             pathToDeviceParam: "params.params.params.device",
           },
         },

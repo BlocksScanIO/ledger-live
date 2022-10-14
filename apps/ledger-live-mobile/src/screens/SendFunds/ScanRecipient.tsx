@@ -3,7 +3,6 @@ import Config from "react-native-config";
 import { decodeURIScheme } from "@ledgerhq/live-common/currencies/index";
 import { getAccountBridge } from "@ledgerhq/live-common/bridge/index";
 import { useSelector } from "react-redux";
-import { CompositeScreenProps } from "@react-navigation/native";
 import { ScreenName } from "../../const";
 import { accountScreenSelector } from "../../reducers/accounts";
 import Scanner from "../../components/Scanner";
@@ -11,13 +10,12 @@ import type { BaseNavigatorStackParamList } from "../../components/RootNavigator
 import type { SendFundsNavigatorStackParamList } from "../../components/RootNavigator/types/SendFundsNavigator";
 import type { StackNavigatorProps } from "../../components/RootNavigator/types/helpers";
 
-type NavigationProps = CompositeScreenProps<
-  StackNavigatorProps<
-    SendFundsNavigatorStackParamList,
-    ScreenName.SendSelectRecipient
-  >,
-  StackNavigatorProps<BaseNavigatorStackParamList>
->;
+type NavigationProps =
+  | StackNavigatorProps<
+      SendFundsNavigatorStackParamList,
+      ScreenName.SendSelectRecipient
+    >
+  | StackNavigatorProps<BaseNavigatorStackParamList, ScreenName.ScanRecipient>;
 
 const ScanRecipient = ({ route, navigation }: NavigationProps) => {
   const { account, parentAccount } = useSelector(accountScreenSelector(route));
@@ -41,6 +39,10 @@ const ScanRecipient = ({ route, navigation }: NavigationProps) => {
         }
       }
 
+      // FIXME: how can this work?
+      // This screen belongs to 2 navigators, Base & SendFunds,
+      // but ScreenName.SendSelectRecipient does not exist in Base.
+      // @ts-expect-error Crash when in coming from the base navigator?
       navigation.navigate(ScreenName.SendSelectRecipient, {
         ...route.params,
         accountId: account.id,

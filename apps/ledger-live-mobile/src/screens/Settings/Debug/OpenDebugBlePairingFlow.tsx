@@ -14,7 +14,10 @@ import { DeviceModelId } from "@ledgerhq/types-devices";
 import SettingsRow from "../../../components/SettingsRow";
 import { NavigatorName, ScreenName } from "../../../const";
 import type { SettingsNavigatorStackParamList } from "../../../components/RootNavigator/types/SettingsNavigator";
-import type { BaseNavigatorStackParamList } from "../../../components/RootNavigator/types/BaseNavigator";
+import type {
+  BaseNavigatorStackParamList,
+  NavigateInput,
+} from "../../../components/RootNavigator/types/BaseNavigator";
 import {
   StackNavigatorNavigation,
   StackNavigatorRoute,
@@ -66,7 +69,19 @@ export default () => {
     // Prompts user to enable bluetooth before navigating to the screen.
     // Not mandatory as BleDevicePairingFlow screen handles the ble requirement, but it smooths the transition
     NativeModules.BluetoothHelperModule.prompt()
-      .then(() =>
+      .then(() => {
+        const navigateInput: NavigateInput<
+          BaseNavigatorStackParamList,
+          NavigatorName.Settings
+        > = {
+          name: NavigatorName.Settings,
+          params: {
+            screen: screenName,
+            params: {
+              ...newParams,
+            },
+          },
+        };
         navigation.navigate(ScreenName.BleDevicePairingFlow, {
           filterByDeviceModelId:
             chosenDeviceModelFilter === "none"
@@ -75,19 +90,11 @@ export default () => {
           areKnownDevicesDisplayed,
           onSuccessAddToKnownDevices,
           onSuccessNavigateToConfig: {
-            navigateInput: {
-              name: NavigatorName.Settings,
-              params: {
-                screen: screenName,
-                params: {
-                  ...newParams,
-                },
-              },
-            },
+            navigateInput,
             pathToDeviceParam: "params.params.pairedDevice",
           },
-        }),
-      )
+        });
+      })
       .catch(() => {
         // ignore
       });
