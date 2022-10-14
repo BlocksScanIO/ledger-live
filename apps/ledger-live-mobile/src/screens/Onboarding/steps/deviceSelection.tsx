@@ -84,10 +84,7 @@ function OnboardingStepDeviceSelection() {
   const next = (deviceModelId: DeviceModelId) => {
     // Add NanoX.id, NanoSP.id etc, to the array when supported
     if ([nanoFTS.id].includes(deviceModelId)) {
-      const navigateInput: NavigateInput<
-        RootStackParamList,
-        NavigatorName.BaseOnboarding
-      > = {
+      const navigateInput: NavigateInput<RootStackParamList> = {
         name: NavigatorName.BaseOnboarding,
         params: {
           screen: NavigatorName.SyncOnboarding,

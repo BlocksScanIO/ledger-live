@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "styled-components/native";
-import { CompositeScreenProps, useNavigation } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { Text, Flex } from "@ledgerhq/native-ui";
 import { useDispatch } from "react-redux";
 import { ImageSourcePropType } from "react-native";
@@ -15,7 +15,7 @@ import { setHasOrderedNano } from "../../../actions/settings";
 import Button from "../../../components/wrappedUi/Button";
 import { OnboardingNavigatorParamList } from "../../../components/RootNavigator/types/OnboardingNavigator";
 import { StackNavigatorProps } from "../../../components/RootNavigator/types/helpers";
-import { BaseOnboardingNavigatorParamList } from "../../../components/RootNavigator/types/BaseOnboardingNavigator";
+import { BaseNavigatorStackParamList } from "../../../components/RootNavigator/types/BaseNavigator";
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const setupLedgerImg = require("../../../images/illustration/Shared/_SetupLedger.png");
@@ -96,13 +96,11 @@ const PostWelcomeDiscoverCard = ({
   );
 };
 
-type NavigationProps = CompositeScreenProps<
-  StackNavigatorProps<
-    OnboardingNavigatorParamList,
-    ScreenName.OnboardingPostWelcomeSelection
-  >,
-  StackNavigatorProps<BaseOnboardingNavigatorParamList>
->;
+type NavigationProps = StackNavigatorProps<
+  OnboardingNavigatorParamList,
+  ScreenName.OnboardingPostWelcomeSelection
+> &
+  StackNavigatorProps<BaseNavigatorStackParamList>;
 
 function PostWelcomeSelection({ route }: NavigationProps) {
   const { userHasDevice } = route.params;

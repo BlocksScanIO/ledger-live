@@ -2,7 +2,7 @@ import { useMarketData } from "@ledgerhq/live-common/market/MarketDataProvider";
 import { Flex, Icon, SearchInput, Text } from "@ledgerhq/native-ui";
 import React, { useCallback, memo, useState, useRef, useEffect } from "react";
 import { Trans, useTranslation } from "react-i18next";
-import { FlatList, TouchableOpacity, Image } from "react-native";
+import { FlatList, TouchableOpacity, Image, TextInput } from "react-native";
 import styled, { useTheme } from "styled-components/native";
 import { useDispatch } from "react-redux";
 import Search from "../../components/Search";
@@ -68,7 +68,7 @@ function MarketCurrencySelect({ navigation }: Props) {
   const { counterCurrency, supportedCounterCurrencies, setCounterCurrency } =
     useMarketData();
   const [search, setSearch] = useState("");
-  const ref = useRef<React.Ref<typeof SearchInput>>();
+  const ref = useRef<TextInput | null>(null);
 
   useEffect(() => {
     if (ref && ref?.current?.focus) ref.current.focus();
@@ -149,7 +149,6 @@ function MarketCurrencySelect({ navigation }: Props) {
         value={search}
         onChange={setSearch}
         ref={ref}
-        bg="background.main"
       />
 
       <Search

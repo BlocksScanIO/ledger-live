@@ -33,7 +33,10 @@ import Bandwidth from "../../icons/Bandwidth";
 import Bolt from "../../icons/Bolt";
 import ClockIcon from "../../icons/Clock";
 import DateFromNow from "../../components/DateFromNow";
-import { StackNavigatorProps } from "../../components/RootNavigator/types/helpers";
+import {
+  StackNavigatorNavigation,
+  StackNavigatorProps,
+} from "../../components/RootNavigator/types/helpers";
 import { UnfreezeNavigatorParamList } from "../../components/RootNavigator/types/UnfreezeNavigator";
 
 /** @TODO move this to common */
@@ -111,7 +114,8 @@ type InnerProps = {
 
 function UnfreezeAmountInner({ account }: InnerProps) {
   const { colors } = useTheme();
-  const navigation = useNavigation();
+  const navigation =
+    useNavigation<StackNavigatorNavigation<UnfreezeNavigatorParamList>>();
   const bridge = getAccountBridge(account, undefined);
   const unit = getAccountUnit(account);
   const { tronResources } = account as TronAccount;
@@ -207,7 +211,9 @@ function UnfreezeAmountInner({ account }: InnerProps) {
                 >
                   <Trans i18nKey="account.bandwidth" />
                 </LText>
-                {unfreezeBandwidth.gt(0) && !canUnfreezeBandwidth ? (
+                {bandwidthExpiredAt &&
+                unfreezeBandwidth.gt(0) &&
+                !canUnfreezeBandwidth ? (
                   <View style={styles.timeWarn}>
                     <ClockIcon color={colors.grey} size={12} />
                     <LText style={styles.timeLabel} semiBold color="grey">
@@ -249,7 +255,9 @@ function UnfreezeAmountInner({ account }: InnerProps) {
                 >
                   <Trans i18nKey="account.energy" />
                 </LText>
-                {unfreezeEnergy.gt(0) && !canUnfreezeEnergy ? (
+                {energyExpiredAt &&
+                unfreezeEnergy.gt(0) &&
+                !canUnfreezeEnergy ? (
                   <View
                     style={[
                       styles.timeWarn,

@@ -99,7 +99,9 @@ export type BaseNavigatorStackParamList = {
   [NavigatorName.Main]: NavigatorScreenParams<MainNavigatorParamList> & {
     hideTabNavigation?: boolean;
   };
-  [NavigatorName.BuyDevice]: NavigatorScreenParams<BuyDeviceNavigatorParamList>;
+  [NavigatorName.BuyDevice]:
+    | NavigatorScreenParams<BuyDeviceNavigatorParamList>
+    | undefined;
   [ScreenName.NoDeviceWallScreen]: undefined;
   [ScreenName.PostBuyDeviceSetupNanoWallScreen]: undefined;
 

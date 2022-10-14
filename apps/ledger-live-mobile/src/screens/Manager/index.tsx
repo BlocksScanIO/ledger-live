@@ -69,6 +69,8 @@ const ChooseDevice: React.FC<ChooseDeviceProps> = ({ isFocused }) => {
     setDevice(undefined);
 
     if (result && "result" in result) {
+      // FIXME: params seem to be lacking some mandatory properties, most notably result and deviceInfo
+      // @ts-expect-error What the hell is going on here?
       navigation.navigate(ScreenName.ManagerMain, {
         ...result,
         ...params,
