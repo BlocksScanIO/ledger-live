@@ -8,6 +8,7 @@ import {
 import { getAccountCapabilities } from "@ledgerhq/live-common/compound/logic";
 import { useNavigation, useTheme } from "@react-navigation/native";
 import { Trans } from "react-i18next";
+import { TokenCurrency } from "@ledgerhq/types-cryptoassets";
 import LText from "../../../components/LText";
 import CurrencyUnitValue from "../../../components/CurrencyUnitValue";
 import CurrencyIcon from "../../../components/CurrencyIcon";
@@ -20,13 +21,14 @@ import Supply from "../../../icons/Supply";
 import Withdraw from "../../../icons/Withdraw";
 import Compound, { compoundColor } from "../../../icons/Compound";
 import { NavigatorName, ScreenName } from "../../../const";
+import { BaseNavigation } from "../../../components/RootNavigator/types/helpers";
 
 type RowProps = {
   item: CompoundAccountSummary;
 };
 export default function ActiveAccountRow({ item }: RowProps) {
   const { colors } = useTheme();
-  const navigation = useNavigation();
+  const navigation = useNavigation<BaseNavigation>();
   const { account, parentAccount, totalSupplied, accruedInterests, status } =
     item;
   const { token } = account;
@@ -138,7 +140,7 @@ export default function ActiveAccountRow({ item }: RowProps) {
         label: (
           <Trans i18nKey="transfer.lending.dashboard.activeAccount.approve" />
         ),
-        Icon: (props: any) => (
+        Icon: (props: React.ComponentProps<typeof Circle>) => (
           <Circle {...props} bg={colors.lightLive}>
             <Plus size={24} color={colors.live} />
           </Circle>
@@ -155,7 +157,7 @@ export default function ActiveAccountRow({ item }: RowProps) {
             params: {
               accountId: account.id,
               parentId: account.parentId,
-              currency,
+              currency: currency as TokenCurrency,
             },
           });
         },
@@ -184,7 +186,7 @@ export default function ActiveAccountRow({ item }: RowProps) {
             params: {
               accountId: account.id,
               parentId: account.parentId,
-              currency,
+              currency: currency as TokenCurrency,
             },
           });
         },
@@ -216,7 +218,7 @@ export default function ActiveAccountRow({ item }: RowProps) {
             params: {
               accountId: account.id,
               parentId: account.parentId,
-              currency,
+              currency: currency as TokenCurrency,
             },
           });
         },
@@ -274,7 +276,6 @@ export default function ActiveAccountRow({ item }: RowProps) {
               currency={token}
               value={totalSupplied}
               disableRounding
-              fontSize={3}
               showCode
               alwaysShowSign={false}
             />

@@ -1,6 +1,3 @@
-import React from "react";
-import { ViewStyle, StyleProp } from "react-native";
-
 declare module "react-native-slider" {
   type Props = {
     value?: number;
@@ -13,6 +10,7 @@ declare module "react-native-slider" {
     thumbTintColor?: string;
     thumbTouchSize?: {
       width: number;
+      a;
       height: number;
     };
     onValueChange?: (_: string | number) => void;
@@ -25,7 +23,7 @@ declare module "react-native-slider" {
     debugTouchArea?: boolean;
     animateTransitions?: boolean;
     animationType?: "spring" | "timing";
-    animationConfig: Record<string, unknown>;
+    animationConfig?: Record<string, unknown>;
   };
   declare const Slider: React.ComponentType<Props>;
   export default Slider;
