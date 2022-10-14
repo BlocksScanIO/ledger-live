@@ -51,7 +51,7 @@ import { BaseNavigatorStackParamList } from "./RootNavigator/types/BaseNavigator
 const { width } = getWindowDimensions();
 
 type FooterProps = {
-  renderAccountSummary: () => ReactNode;
+  renderAccountSummary?: () => ReactNode;
 };
 
 const Footer = ({ renderAccountSummary }: FooterProps) => {
@@ -76,7 +76,7 @@ type Props = {
   countervalueAvailable: boolean;
   counterValueCurrency: Currency;
   useCounterValue?: boolean;
-  renderAccountSummary: () => ReactNode;
+  renderAccountSummary?: () => ReactNode;
   onSwitchAccountCurrency: () => void;
   parentAccount?: Account;
 };

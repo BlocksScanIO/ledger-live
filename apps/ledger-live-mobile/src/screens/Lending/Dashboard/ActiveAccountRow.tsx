@@ -1,6 +1,9 @@
 import React, { useCallback, useState, useMemo } from "react";
 import { TouchableOpacity, View, StyleSheet } from "react-native";
-import type { CompoundAccountSummary } from "@ledgerhq/live-common/compound/types";
+import type {
+  CompoundAccountStatus,
+  CompoundAccountSummary,
+} from "@ledgerhq/live-common/compound/types";
 import {
   getAccountName,
   getAccountCurrency,
@@ -24,7 +27,10 @@ import { NavigatorName, ScreenName } from "../../../const";
 import { BaseNavigation } from "../../../components/RootNavigator/types/helpers";
 
 type RowProps = {
-  item: CompoundAccountSummary;
+  item: Omit<
+    CompoundAccountSummary,
+    "opened" | "closed" | "allTimeEarned" | "status"
+  > & { status?: CompoundAccountStatus };
 };
 export default function ActiveAccountRow({ item }: RowProps) {
   const { colors } = useTheme();
@@ -166,7 +172,7 @@ export default function ActiveAccountRow({ item }: RowProps) {
         label: (
           <Trans i18nKey="transfer.lending.dashboard.activeAccount.supply" />
         ),
-        Icon: (props: any) => (
+        Icon: (props: React.ComponentProps<typeof Circle>) => (
           <Circle
             {...props}
             bg={!canSupply ? colors.lightFog : colors.lightLive}
@@ -195,7 +201,7 @@ export default function ActiveAccountRow({ item }: RowProps) {
         label: (
           <Trans i18nKey="transfer.lending.dashboard.activeAccount.withdraw" />
         ),
-        Icon: (props: any) => (
+        Icon: (props: React.ComponentProps<typeof Circle>) => (
           <Circle
             {...props}
             bg={!canWithdraw ? colors.lightFog : colors.lightLive}
